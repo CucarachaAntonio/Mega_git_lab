@@ -1,0 +1,9 @@
+ps_admin_1 A repeat 1
+llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+ps_admin_1 A repeat 2
+ps_admin_1 A repeat 3
+ps_admin_1 B repeat 1
+ps_admin_1 B repeat 2
+ps_admin_1 B repeat 3
+ps_admin_1 C repeat 1
+ps_admin_1 D repeat 1

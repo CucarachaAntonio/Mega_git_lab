@@ -1,0 +1,31 @@
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Collecting llama-cpp-python==0.3.18
+  Downloading llama_cpp_python-0.3.18.tar.gz (61.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 61.7/61.7 MB 14.6 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: llama-cpp-python
+  Building wheel for llama-cpp-python (pyproject.toml): started
+  Building wheel for llama-cpp-python (pyproject.toml): still running...
+  Building wheel for llama-cpp-python (pyproject.toml): still running...
+  Building wheel for llama-cpp-python (pyproject.toml): still running...
+  Building wheel for llama-cpp-python (pyproject.toml): still running...
+  Building wheel for llama-cpp-python (pyproject.toml): finished with status 'done'
+  Created wheel for llama-cpp-python: filename=llama_cpp_python-0.3.18-cp312-cp312-linux_x86_64.whl size=13274205 sha256=1b0e01581794eb0aaac669b46e39229f401e9615ac9df1a9c69724239941dae1
+  Stored in directory: /tmp/pip-ephem-wheel-cache-niwj4tiy/wheels/57/6e/8d/053dc9f7c7a01149860df1f394e20b4ac92b0df6dd24747698
+Successfully built llama-cpp-python
+Installing collected packages: llama-cpp-python
+  Attempting uninstall: llama-cpp-python
+    Found existing installation: llama_cpp_python 0.3.18
+    Uninstalling llama_cpp_python-0.3.18:
+      Successfully uninstalled llama_cpp_python-0.3.18
+Successfully installed llama-cpp-python-0.3.18
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: python -m pip install --upgrade pip
