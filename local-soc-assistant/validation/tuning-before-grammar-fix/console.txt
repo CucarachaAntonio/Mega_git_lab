@@ -1,0 +1,7 @@
+ps_admin_1 A repeat 1
+llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+ps_admin_1 A repeat 2
+{
+  "status": "cancelled",
+  "message": "Эксперимент прерван; завершённые и частичные результаты сохранены"
+}

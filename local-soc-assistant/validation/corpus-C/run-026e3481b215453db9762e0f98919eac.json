@@ -1,0 +1,115 @@
+{
+  "run_id": "run-026e3481b215453db9762e0f98919eac",
+  "case_id": "case-ea6480bc679094943424",
+  "mode": "C",
+  "status": "abstained",
+  "versions": {
+    "application": "0.1.0",
+    "schema": "1.0",
+    "config_sha256": "dd8745a6198cff19ca95a4d035c3a027e6665fa011742b05ef84cce9da874871",
+    "profiles": "process-profiles-1.1",
+    "model_config": {
+      "path": "models/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "context": 4096,
+      "max_tokens": 1100,
+      "threads": 4,
+      "batch": 128,
+      "temperature": 0.1,
+      "seed": 42,
+      "format_retries": 1,
+      "max_seconds": 600,
+      "max_input_chars": 16000
+    },
+    "inputs": [
+      "187548ff018bfa07cdbca59313cea7373f6926e5ed48f84d7c038fb9cdcba7c5"
+    ],
+    "case_sha256": "9199983544c2fbb183c5a89acfe99117c0885f906f0736bdd87be4e1592360e5",
+    "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+    "snapshot_provenance": {
+      "source": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v18.0/enterprise-attack/enterprise-attack.json",
+      "release": "18.0",
+      "scope": "4 official technique definitions; demo subset, not full Enterprise",
+      "license": "MITRE ATT&CK Terms of Use",
+      "original_sha256": "ff94838b09edfe7d59eec1cd7af0a1e229c4bc0ae0bdfa98ad170aeec9c3e272",
+      "procedure_examples": "3 official uses-relationship descriptions; context only"
+    },
+    "index": {
+      "sqlite_version": "3.53.1",
+      "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "chunk_chars": "1800",
+      "algorithm": "fts5-bm25-title6-definition-quota-v3",
+      "runbook_sha256": "c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31",
+      "index_version": "78332fbba7b40248204f644d8058fdd29d7969306a96aa4423d971bc4366575e"
+    }
+  },
+  "facts": [],
+  "hypotheses": [],
+  "techniques": [],
+  "recommendations": [],
+  "priority": "unknown",
+  "priority_reasons": [
+    "Критичность части ресурсов неизвестна; она не предполагается",
+    "Недостаточно поддерживаемых признаков для определения очередности проверки"
+  ],
+  "timeline": [
+    {
+      "event_id": "ev-df5c432d69a78d69b84d9557",
+      "original_time": "2026-01-15T10:00:01+03:00",
+      "utc_time": "2026-01-15T07:00:01+00:00",
+      "timezone_known": true,
+      "warning": null
+    }
+  ],
+  "links": [],
+  "missing": [
+    "Разрешённость действий и их результат требуют дополнительного контекста"
+  ],
+  "limitations": [
+    "Связывание означает совместную проверку, причинная связь не установлена",
+    "Доказательная постпроверка режима D не применялась; выводы не считаются верифицированными",
+    "Отнесение наблюдаемого поведения к ATT&CK не доказывает успешность атаки или злонамеренность"
+  ],
+  "checks": [],
+  "refusals": [
+    {
+      "target": "model_or_rules",
+      "code": "declared_abstention",
+      "reason": "Фиксированные правила не нашли полного набора поддерживаемых признаков и источников",
+      "needed": [],
+      "verification": "rule_condition"
+    }
+  ],
+  "errors": [],
+  "retrieval": {
+    "status": "no_results",
+    "query": "notepad.exe notepad",
+    "chunk_ids": [],
+    "index_version": "78332fbba7b40248204f644d8058fdd29d7969306a96aa4423d971bc4366575e"
+  },
+  "sources": [],
+  "durations": {
+    "priority": 0.0002515999999559426,
+    "retrieval": 0.0005755980000685668,
+    "generation_or_rules": 0.00006555899972227053,
+    "total": 0.0033624300003793905
+  },
+  "environment": {
+    "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "cpu": "",
+    "cpu_logical": 3,
+    "memory_total_bytes": 10452459520,
+    "memory_available_bytes": 9597603840,
+    "rss_start_bytes": 49278976,
+    "created_utc": "2026-11-06T10:52:58.397728+00:00",
+    "cgroup_cpu_max": "200000 100000",
+    "cgroup_memory_max": "8589934592",
+    "cgroup_memory_current": "1503760384",
+    "sampled_peak_rss_bytes": 49283072,
+    "rss_sample_count": 1,
+    "rss_sampling_interval_seconds": 0.1,
+    "memory_note": "Sampled RSS maximum; may miss peaks shorter than interval, not total system usage",
+    "rss_end_bytes": 49278976
+  },
+  "attempts": []
+}
