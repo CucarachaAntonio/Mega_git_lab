@@ -1,0 +1,19 @@
+[server]
+address = "127.0.0.1"
+port = 8501
+headless = true
+maxUploadSize = 10
+fileWatcherType = "none"
+enableXsrfProtection = true
+[browser]
+gatherUsageStats = false
+[theme]
+base = "light"
+primaryColor = "#176B87"
+backgroundColor = "#F5F7FB"
+secondaryBackgroundColor = "#E8EEF5"
+textColor = "#182B43"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"

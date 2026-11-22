@@ -1,0 +1,22 @@
+[
+  {
+    "id": "invalid_event",
+    "mutation": "Replace evidence event_id with missing",
+    "expected_code": "invalid_event"
+  },
+  {
+    "id": "invalid_field",
+    "mutation": "Replace evidence field with missing",
+    "expected_code": "invalid_field"
+  },
+  {
+    "id": "false_claim_valid_link",
+    "mutation": "Change cited value while keeping an existing field",
+    "expected_code": "content_mismatch"
+  },
+  {
+    "id": "wrong_technique",
+    "mutation": "Cite PowerShell event as schtasks /create",
+    "expected_code": "contradiction"
+  }
+]

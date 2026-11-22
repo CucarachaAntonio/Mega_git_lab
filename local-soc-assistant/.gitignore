@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+data/
+models/
+*.gguf
+runtime/
+
+# Pinned full ATT&CK is obtained by Setup.ps1 -FullAttack / prepare --attack.
+knowledge/enterprise-full.json

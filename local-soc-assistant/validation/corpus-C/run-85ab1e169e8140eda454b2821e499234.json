@@ -1,0 +1,165 @@
+{
+  "run_id": "run-85ab1e169e8140eda454b2821e499234",
+  "case_id": "case-e96736300f44da61176f",
+  "mode": "C",
+  "status": "abstained",
+  "versions": {
+    "application": "0.1.0",
+    "schema": "1.0",
+    "config_sha256": "dd8745a6198cff19ca95a4d035c3a027e6665fa011742b05ef84cce9da874871",
+    "profiles": "process-profiles-1.1",
+    "model_config": {
+      "path": "models/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "context": 4096,
+      "max_tokens": 1100,
+      "threads": 4,
+      "batch": 128,
+      "temperature": 0.1,
+      "seed": 42,
+      "format_retries": 1,
+      "max_seconds": 600,
+      "max_input_chars": 16000
+    },
+    "inputs": [
+      "1ebbf69b32833448bde2d48331a303c45db2608571dcc35290910e2191c9eeb9"
+    ],
+    "case_sha256": "0983b120b3f6fe00e7bfbc4b5bc586943c77d9b298640e570e6099b4e51d5c6b",
+    "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+    "snapshot_provenance": {
+      "source": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v18.0/enterprise-attack/enterprise-attack.json",
+      "release": "18.0",
+      "scope": "4 official technique definitions; demo subset, not full Enterprise",
+      "license": "MITRE ATT&CK Terms of Use",
+      "original_sha256": "ff94838b09edfe7d59eec1cd7af0a1e229c4bc0ae0bdfa98ad170aeec9c3e272",
+      "procedure_examples": "3 official uses-relationship descriptions; context only"
+    },
+    "index": {
+      "sqlite_version": "3.53.1",
+      "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "chunk_chars": "1800",
+      "algorithm": "fts5-bm25-title6-definition-quota-v3",
+      "runbook_sha256": "c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31",
+      "index_version": "78332fbba7b40248204f644d8058fdd29d7969306a96aa4423d971bc4366575e"
+    }
+  },
+  "facts": [],
+  "hypotheses": [],
+  "techniques": [],
+  "recommendations": [],
+  "priority": "unknown",
+  "priority_reasons": [
+    "Критичность части ресурсов неизвестна; она не предполагается",
+    "Недостаточно поддерживаемых признаков для определения очередности проверки"
+  ],
+  "timeline": [
+    {
+      "event_id": "ev-1baf0546392dc0ca2000e512",
+      "original_time": "2026-01-15T10:00:01+03:00",
+      "utc_time": "2026-01-15T07:00:01+00:00",
+      "timezone_known": true,
+      "warning": null
+    }
+  ],
+  "links": [],
+  "missing": [
+    "Разрешённость действий и их результат требуют дополнительного контекста"
+  ],
+  "limitations": [
+    "Связывание означает совместную проверку, причинная связь не установлена",
+    "Доказательная постпроверка режима D не применялась; выводы не считаются верифицированными",
+    "Отнесение наблюдаемого поведения к ATT&CK не доказывает успешность атаки или злонамеренность"
+  ],
+  "checks": [],
+  "refusals": [
+    {
+      "target": "model_or_rules",
+      "code": "declared_abstention",
+      "reason": "Фиксированные правила не нашли полного набора поддерживаемых признаков и источников",
+      "needed": [],
+      "verification": "rule_condition"
+    }
+  ],
+  "errors": [],
+  "retrieval": {
+    "status": "found",
+    "query": "powershell.exe powershell",
+    "chunk_ids": [
+      "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0",
+      "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9:0",
+      "relationship--0068ee65-0945-4f69-ba81-163ffbc05e53:0",
+      "relationship--00fe415d-9364-4d03-95ee-f1413d996c30:0"
+    ],
+    "index_version": "78332fbba7b40248204f644d8058fdd29d7969306a96aa4423d971bc4366575e"
+  },
+  "sources": [
+    {
+      "chunk_id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0",
+      "document_id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "text": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems).\n\nPowerShell may also be used to download and run executables from the Internet, which can be executed from disk or in memory without touching disk.\n\nA number of PowerShell-based offensive testing tools are available, including [Empire](https://attack.mitre.org/software/S0363),  [PowerSploit](https://attack.mitre.org/software/S0194), [PoshC2](https://attack.mitre.org/software/S0378), and PSAttack.(Citation: Github PSAttack)\n\nPowerShell commands/scripts can also be executed without directly invoking the <code>powershell.exe</code> binary through interfaces to PowerShell's underlying <code>System.Management.Automation</code> assembly DLL exposed through the .NET framework and Windows Common Language Interface (CLI).(Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015)(Citation: Microsoft PSfromCsharp APR 2014)",
+      "title": "PowerShell",
+      "source": "https://attack.mitre.org/techniques/T1059/001",
+      "version": "1.5",
+      "source_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "technique_id": "T1059.001",
+      "score": 1.2748085828557496
+    },
+    {
+      "chunk_id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9:0",
+      "document_id": "attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9",
+      "text": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Control Panel.(Citation: Stack Overflow) In some cases, adversaries have used a .NET wrapper for the Windows Task Scheduler, and alternatively, adversaries have used the Windows netapi32 library and [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) (WMI) to create a scheduled task. Adversaries may also utilize the Powershell Cmdlet `Invoke-CimMethod`, which leverages WMI class `PS_ScheduledTask` to create a scheduled task via an XML path.(Citation: Red Canary - Atomic Red Team)\n\nAn adversary may use Windows Task Scheduler to execute programs at system startup or on a scheduled basis for persistence. The Windows Task Scheduler can also be abused to conduct remote Execution as part of Lateral Movement and/or to run a process under the context of a specified account (such as SYSTEM). Similar to [System Binary Proxy Execution](https://attack.mitre.org/techniques/T1218), adversaries have also abused the Windows Task Scheduler to potentially mask one-time execution under signed/trusted system processes.(Citation: ProofPoint Serpent)\n\nAdversaries may also create \"hidden\" scheduled tasks (i.e. [Hide Artifacts](https://attack.mitre.org/techniques/T1564)) that may not be visible to defender tools and manual queries used to enumerate tasks. Specifically, an adversary may hide a task from `schtasks /query` and the Task Scheduler by deleting the associated Securi",
+      "title": "Scheduled Task",
+      "source": "https://attack.mitre.org/techniques/T1053/005",
+      "version": "1.8",
+      "source_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "technique_id": "T1053.005",
+      "score": 6.24873949579832e-7
+    },
+    {
+      "chunk_id": "relationship--0068ee65-0945-4f69-ba81-163ffbc05e53:0",
+      "document_id": "relationship--0068ee65-0945-4f69-ba81-163ffbc05e53",
+      "text": "CONTEXT ONLY. Not evidence for the current case. [WIRTE](https://attack.mitre.org/groups/G0090) has used PowerShell for script execution.(Citation: Lab52 WIRTE Apr 2019)",
+      "title": "Исторический пример ATT&CK — только контекст",
+      "source": "MITRE ATT&CK STIX:relationship--0068ee65-0945-4f69-ba81-163ffbc05e53",
+      "version": "2025-04-28T15:31:35.449Z",
+      "source_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "technique_id": null,
+      "score": 1.4142259414225944e-6
+    },
+    {
+      "chunk_id": "relationship--00fe415d-9364-4d03-95ee-f1413d996c30:0",
+      "document_id": "relationship--00fe415d-9364-4d03-95ee-f1413d996c30",
+      "text": "CONTEXT ONLY. Not evidence for the current case. [RansomHub](https://attack.mitre.org/software/S1212) can use PowerShell to delete volume shadow copies.(Citation: Group-IB RansomHub FEB 2025)",
+      "title": "Исторический пример ATT&CK — только контекст",
+      "source": "MITRE ATT&CK STIX:relationship--00fe415d-9364-4d03-95ee-f1413d996c30",
+      "version": "2025-04-16T21:53:05.779Z",
+      "source_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "technique_id": null,
+      "score": 1.3927701816819631e-6
+    }
+  ],
+  "durations": {
+    "priority": 0.0001385890000165091,
+    "retrieval": 0.0007517530002587591,
+    "generation_or_rules": 0.000027502000193635467,
+    "total": 0.0028044789996783948
+  },
+  "environment": {
+    "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "cpu": "",
+    "cpu_logical": 3,
+    "memory_total_bytes": 10452459520,
+    "memory_available_bytes": 9597689856,
+    "rss_start_bytes": 49229824,
+    "created_utc": "2026-11-06T10:52:58.327457+00:00",
+    "cgroup_cpu_max": "200000 100000",
+    "cgroup_memory_max": "8589934592",
+    "cgroup_memory_current": "1503674368",
+    "sampled_peak_rss_bytes": 49233920,
+    "rss_sample_count": 1,
+    "rss_sampling_interval_seconds": 0.1,
+    "memory_note": "Sampled RSS maximum; may miss peaks shorter than interval, not total system usage",
+    "rss_end_bytes": 49229824
+  },
+  "attempts": []
+}

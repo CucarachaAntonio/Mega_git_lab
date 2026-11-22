@@ -1,0 +1,36 @@
+[paths]
+data = "data"
+snapshot = "knowledge/enterprise-demo.json"
+index = "data/knowledge.sqlite"
+assets = "knowledge/assets.json"
+
+[limits]
+upload_mb = 10
+max_events = 2000
+max_field_chars = 4096
+max_depth = 16
+max_case_events = 16
+window_seconds = 600
+rag_top_k = 4
+rag_chunk_chars = 1800
+
+[model]
+path = "models/qwen2.5-1.5b-instruct-q4_k_m.gguf"
+context = 4096
+max_tokens = 1100
+threads = 4
+batch = 128
+temperature = 0.1
+seed = 42
+format_retries = 1
+max_seconds = 600
+max_input_chars = 16000
+
+[priority]
+# Queue priority from observed indicators, not confidence or Wazuh level.
+high_on_encoded_command = false
+high_on_critical_asset_and_indicator = true
+critical_assets = ["critical"]
+
+[correlation]
+enabled = ["same_host_process_v1", "same_host_account_v1"]

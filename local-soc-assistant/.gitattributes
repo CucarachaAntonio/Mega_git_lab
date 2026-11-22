@@ -1,0 +1,3 @@
+# Keep hashes of JSONL fixtures and knowledge snapshots stable on Windows.
+* text=auto eol=lf
+*.png binary

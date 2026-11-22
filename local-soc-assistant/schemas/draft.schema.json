@@ -1,0 +1,429 @@
+{
+  "$defs": {
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Id"
+        },
+        "json_pointer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Json Pointer"
+        }
+      },
+      "required": [
+        "event_id",
+        "field",
+        "value"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "technique_id": {
+          "pattern": "^T[0-9]{4}([.][0-9]{3})?$",
+          "title": "Technique Id",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 300,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 4,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "verdict": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "rejected",
+            "analyst_required"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "identity_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Identity Check",
+          "type": "string"
+        },
+        "observation_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Observation Check",
+          "type": "string"
+        },
+        "support_state": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "contradicted",
+            "insufficient",
+            "not_verifiable"
+          ],
+          "title": "Support State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "technique_id",
+        "rationale",
+        "evidence"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "LinkClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "from_event": {
+          "title": "From Event",
+          "type": "string"
+        },
+        "to_event": {
+          "title": "To Event",
+          "type": "string"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "delta_seconds": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delta Seconds"
+        },
+        "kind": {
+          "default": "temporal",
+          "enum": [
+            "temporal",
+            "identifier",
+            "causal"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_event",
+        "to_event",
+        "rule"
+      ],
+      "title": "LinkClaim",
+      "type": "object"
+    },
+    "PriorityClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 8,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "asset_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Asset Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category"
+      ],
+      "title": "PriorityClaim",
+      "type": "object"
+    },
+    "Recommendation": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "review_process",
+            "collect_logs",
+            "check_account",
+            "confirm_authorization"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "condition": {
+          "maxLength": 400,
+          "title": "Condition",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 4,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "status": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "analyst_required",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "hypothesis_indices": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 3,
+          "title": "Hypothesis Indices",
+          "type": "array"
+        },
+        "missing_fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Missing Fields",
+          "type": "array"
+        },
+        "technique_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Technique Ids",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action",
+        "condition"
+      ],
+      "title": "Recommendation",
+      "type": "object"
+    },
+    "TimelineClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "utc_time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Utc Time"
+        }
+      },
+      "required": [
+        "event_id",
+        "utc_time"
+      ],
+      "title": "TimelineClaim",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "maxItems": 4,
+      "title": "Facts",
+      "type": "array"
+    },
+    "hypotheses": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "title": "Hypotheses",
+      "type": "array"
+    },
+    "techniques": {
+      "items": {
+        "$ref": "#/$defs/Finding"
+      },
+      "maxItems": 3,
+      "title": "Techniques",
+      "type": "array"
+    },
+    "recommendations": {
+      "items": {
+        "$ref": "#/$defs/Recommendation"
+      },
+      "maxItems": 2,
+      "title": "Recommendations",
+      "type": "array"
+    },
+    "missing": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Missing",
+      "type": "array"
+    },
+    "abstentions": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 4,
+      "title": "Abstentions",
+      "type": "array"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/TimelineClaim"
+      },
+      "maxItems": 16,
+      "title": "Timeline",
+      "type": "array"
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/LinkClaim"
+      },
+      "maxItems": 16,
+      "title": "Links",
+      "type": "array"
+    },
+    "priority": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PriorityClaim"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "title": "Draft",
+  "type": "object",
+  "$id": "urn:local-soc-assistant:draft:1.2"
+}

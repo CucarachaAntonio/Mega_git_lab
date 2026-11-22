@@ -1,0 +1,41 @@
+{
+  "snapshot": {
+    "ok": true,
+    "sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+    "techniques": 4,
+    "provenance": {
+      "source": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v18.0/enterprise-attack/enterprise-attack.json",
+      "release": "18.0",
+      "scope": "4 official technique definitions; demo subset, not full Enterprise",
+      "license": "MITRE ATT&CK Terms of Use",
+      "original_sha256": "ff94838b09edfe7d59eec1cd7af0a1e229c4bc0ae0bdfa98ad170aeec9c3e272",
+      "procedure_examples": "3 official uses-relationship descriptions; context only"
+    }
+  },
+  "index": {
+    "ok": true,
+    "metadata": {
+      "sqlite_version": "3.53.1",
+      "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+      "chunk_chars": "1800",
+      "algorithm": "fts5-bm25-title6-definition-quota-v4",
+      "runbook_sha256": "c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31",
+      "index_version": "2e0aaa5ddd1b1c4bd1f2b0a3c986afed07617c78938471abdbd595bd67aeda09"
+    },
+    "message": "готов"
+  },
+  "model": {
+    "ok": true,
+    "message": "/workspace/work/local-soc-assistant/models/qwen2.5-1.5b-instruct-q4_k_m.gguf"
+  },
+  "runtime": {
+    "ok": true,
+    "version": "0.3.18"
+  },
+  "grammar": {
+    "ok": true,
+    "schema": "1.1"
+  },
+  "mode_C_ready": true,
+  "generative_ready": true
+}

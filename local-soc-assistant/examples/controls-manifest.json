@@ -1,0 +1,10 @@
+{
+  "version": "2.0",
+  "origin": "Synthetic, CC0-1.0; no real user telemetry",
+  "count": 10,
+  "generator": "scripts/make_controls.py",
+  "gold": "evaluation/controls.json",
+  "saved_drafts": "examples/drafts/",
+  "real_llm": false,
+  "warning": "A and B fixtures are identical on purpose; results only verify transport, pairing and deterministic checks."
+}

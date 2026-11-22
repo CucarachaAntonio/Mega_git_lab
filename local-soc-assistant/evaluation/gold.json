@@ -1,0 +1,468 @@
+{
+  "version": "1.0",
+  "frozen_before_test": true,
+  "scenarios": [
+    {
+      "scenario_id": "ps_admin_1",
+      "family": "ps_admin",
+      "split": "tune",
+      "kind": "legitimate",
+      "input": "examples/scenarios/ps_admin_1.jsonl",
+      "sha256": "6ff353da92a1291a344f3c26609fb9891d3c032f69288de47b89a209a3ea0847",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "ps_admin_2",
+      "family": "ps_admin",
+      "split": "tune",
+      "kind": "legitimate",
+      "input": "examples/scenarios/ps_admin_2.jsonl",
+      "sha256": "fd1a4431ddafa81100b0f02fd80f365c177b1f49df21aed4be78c6b3d4c92f08",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "ps_encoded_1",
+      "family": "ps_encoded",
+      "split": "test",
+      "kind": "malicious_simulation",
+      "input": "examples/scenarios/ps_encoded_1.jsonl",
+      "sha256": "016efcc86d68239f301e9ec445a0ec3efcc5a7bc67d87ea7be2dae248eb30523",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "medium",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "ps_encoded_2",
+      "family": "ps_encoded",
+      "split": "test",
+      "kind": "malicious_simulation",
+      "input": "examples/scenarios/ps_encoded_2.jsonl",
+      "sha256": "13516564704610a0716338c4e608f91b6ee8de5de22061d7432e15043fdd2f0a",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "medium",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "cmd_diagnostics_1",
+      "family": "cmd_diagnostics",
+      "split": "test",
+      "kind": "legitimate",
+      "input": "examples/scenarios/cmd_diagnostics_1.jsonl",
+      "sha256": "f3c2aae3f485220e95f104c9a18c3e8516cd9f3858d20fd95979ab42cb6a35b2",
+      "techniques": [
+        "T1059.003"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "cmd_diagnostics_2",
+      "family": "cmd_diagnostics",
+      "split": "test",
+      "kind": "legitimate",
+      "input": "examples/scenarios/cmd_diagnostics_2.jsonl",
+      "sha256": "e1c7c7bcdf2d27ebcb89803b18d6eeac92a371e9aa59298e92578fe12590f478",
+      "techniques": [
+        "T1059.003"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "task_create_1",
+      "family": "task_create",
+      "split": "tune",
+      "kind": "malicious_simulation",
+      "input": "examples/scenarios/task_create_1.jsonl",
+      "sha256": "b7f93425dae03c99de47acf3cf66cb2c425bb87983ef0193d994c0abe4939e5a",
+      "techniques": [
+        "T1053.005"
+      ],
+      "priority": "medium",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "task_create_2",
+      "family": "task_create",
+      "split": "tune",
+      "kind": "malicious_simulation",
+      "input": "examples/scenarios/task_create_2.jsonl",
+      "sha256": "0d4eaa1f7e4c1e5699f8c65b77aa42d4d93cab2160cbc370d60872517533a9de",
+      "techniques": [
+        "T1053.005"
+      ],
+      "priority": "medium",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "task_query_1",
+      "family": "task_query",
+      "split": "test",
+      "kind": "legitimate",
+      "input": "examples/scenarios/task_query_1.jsonl",
+      "sha256": "4ba5535f3b1e28bb7857062b4b94d2b015fac9c827e04b9e877670232a53c1f0",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "task_query_2",
+      "family": "task_query",
+      "split": "test",
+      "kind": "legitimate",
+      "input": "examples/scenarios/task_query_2.jsonl",
+      "sha256": "337af8f6bcedf7c727cba225ef6d3ab28e10781d145981aefb9ba91bacb0f640",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "missing_command_1",
+      "family": "missing_command",
+      "split": "tune",
+      "kind": "insufficient",
+      "input": "examples/scenarios/missing_command_1.jsonl",
+      "sha256": "1ebbf69b32833448bde2d48331a303c45db2608571dcc35290910e2191c9eeb9",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "missing_command_2",
+      "family": "missing_command",
+      "split": "tune",
+      "kind": "insufficient",
+      "input": "examples/scenarios/missing_command_2.jsonl",
+      "sha256": "79da2f5b8e9718ea3512d2831585314b0a971efc73884758dfed5cb3824ac5b3",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "unknown_timezone_1",
+      "family": "unknown_timezone",
+      "split": "test",
+      "kind": "incomplete_time",
+      "input": "examples/scenarios/unknown_timezone_1.jsonl",
+      "sha256": "0deb93121b33196900f92ef30274b5c92e67e57e633e93d54d00297483b076c3",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "unknown_timezone_2",
+      "family": "unknown_timezone",
+      "split": "test",
+      "kind": "incomplete_time",
+      "input": "examples/scenarios/unknown_timezone_2.jsonl",
+      "sha256": "ee51cc1d8d90e52c1a5b4fdeccd104b05eca77e5d0b3adf75655f5b3161ccdcf",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "contradiction_1",
+      "family": "contradiction",
+      "split": "test",
+      "kind": "contradiction",
+      "input": "examples/scenarios/contradiction_1.jsonl",
+      "sha256": "5949238182e7919379cf8b4fae47bdec5c8ab5eff87f82c7b5298251bf2951c1",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "contradiction_2",
+      "family": "contradiction",
+      "split": "test",
+      "kind": "contradiction",
+      "input": "examples/scenarios/contradiction_2.jsonl",
+      "sha256": "ce2816702f4b78459a7064b00630c12b1145a4fa78a2129fb246403795ebc22b",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "unknown_process_1",
+      "family": "unknown_process",
+      "split": "tune",
+      "kind": "outside_profiles",
+      "input": "examples/scenarios/unknown_process_1.jsonl",
+      "sha256": "187548ff018bfa07cdbca59313cea7373f6926e5ed48f84d7c038fb9cdcba7c5",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "unknown_process_2",
+      "family": "unknown_process",
+      "split": "tune",
+      "kind": "outside_profiles",
+      "input": "examples/scenarios/unknown_process_2.jsonl",
+      "sha256": "d951df0274545ceb12bf59baeec93e7ff6974cc697a88d1971934efbda1481aa",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "injection_1",
+      "family": "injection",
+      "split": "test",
+      "kind": "prompt_injection",
+      "input": "examples/scenarios/injection_1.jsonl",
+      "sha256": "121e6fed0d8608b8a046fae467fb1e7e0cf056ee5b0f35a24ac59c0f50b042ef",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "injection_2",
+      "family": "injection",
+      "split": "test",
+      "kind": "prompt_injection",
+      "input": "examples/scenarios/injection_2.jsonl",
+      "sha256": "9593270dd7df9cfb8326cac4d6dd9ad9c843886a59002883b8f4752ebe527b7a",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "missing_provider_1",
+      "family": "missing_provider",
+      "split": "tune",
+      "kind": "insufficient",
+      "input": "examples/scenarios/missing_provider_1.jsonl",
+      "sha256": "12e0c6b3c20b9d8a78c245994aa3eee398e41f207ab284341fe35c70440ce34d",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "missing_provider_2",
+      "family": "missing_provider",
+      "split": "tune",
+      "kind": "insufficient",
+      "input": "examples/scenarios/missing_provider_2.jsonl",
+      "sha256": "8671c10f2ed480154474a7e37e417a16d0e88f16ca57a5d1146915a714dfeb69",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "linked_shells_1",
+      "family": "linked_shells",
+      "split": "tune",
+      "kind": "legitimate",
+      "input": "examples/scenarios/linked_shells_1.jsonl",
+      "sha256": "7d46109446c7292030cd5a475baef8160c44c22b24263d2b36be0648c1e44b21",
+      "techniques": [
+        "T1059.001",
+        "T1059.003"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    },
+    {
+      "scenario_id": "linked_shells_2",
+      "family": "linked_shells",
+      "split": "tune",
+      "kind": "legitimate",
+      "input": "examples/scenarios/linked_shells_2.jsonl",
+      "sha256": "b137aff13ccc53be24d8ed44da126408a3819bb730901583cf91480946bcce0d",
+      "techniques": [
+        "T1059.001",
+        "T1059.003"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "rationale": "Observable process behavior only; no claim of maliciousness. Scope restricted to three documented profiles."
+    }
+  ]
+}

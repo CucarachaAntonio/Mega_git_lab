@@ -1,0 +1,17 @@
+{
+  "status": "technical_error",
+  "run_id": "run-91258222dfe840dd856872eb41781fab",
+  "priority": "medium",
+  "techniques": [],
+  "errors": [
+    {
+      "code": "model_unavailable",
+      "message": "GGUF-модель отсутствует; выполните подготовку отдельно"
+    }
+  ],
+  "import_accepted": 1,
+  "import_rejected": 0,
+  "import_file_errors": 0,
+  "json": "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/model-unavailable/report.json",
+  "html": "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/model-unavailable/report.html"
+}

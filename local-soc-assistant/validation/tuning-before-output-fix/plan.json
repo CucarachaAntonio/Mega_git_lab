@@ -1,0 +1,18 @@
+{
+  "modes": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "repeats": 3,
+  "split": "tune",
+  "scenarios": [
+    "ps_admin_1"
+  ],
+  "gold_sha256": "7c16915c85d1a6984f938469a57c1aafd18eb073df80eefe776323e2e3d0dc83",
+  "config_sha256": "dd8745a6198cff19ca95a4d035c3a027e6665fa011742b05ef84cce9da874871",
+  "warning": "Engineering corpus only; no statistical superiority claim. Manual fields unfilled.",
+  "status": "preliminary_tuning_stopped",
+  "note": "Stopped after format failures to constrain Draft schema, reset prompt state and apply explicit context-budget fitting. Not final results."
+}

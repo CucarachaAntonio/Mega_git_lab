@@ -1,0 +1,8 @@
+{
+  "sqlite_version": "3.53.1",
+  "snapshot_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+  "chunk_chars": "1800",
+  "algorithm": "fts5-bm25-title6-definition-quota-offsets-v5",
+  "runbook_sha256": "c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31",
+  "index_version": "b8f4a7e65bddc1cde11c238c8c0b3ab2bc902a9d30fde2403793b885f4dbbb66"
+}

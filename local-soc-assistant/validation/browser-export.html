@@ -1,0 +1,294 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>Локальный отчёт ИБ</title><style>body{max-width:1100px;margin:2rem auto;padding:1rem;font:16px system-ui;line-height:1.5;background:#f6f8fc;color:#17243b}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:white;padding:1rem;border:1px solid #dde4ef}a{color:#1257a6}h2{margin-top:2rem}.badge{background:#e1eafa;padding:.3rem .6rem}</style>
+<h1>Отчёт анализа событий ИБ</h1>
+<p>case-fd8dd185bf5992dc4dad · режим C · completed</p>
+<p class="badge">Приоритет: средний</p>
+<h2>Основания приоритета</h2>
+<pre>[
+  &quot;Критичность части ресурсов неизвестна; она не предполагается&quot;,
+  &quot;Подтверждён процесс с проверяемым признаком: encodedcommand или schtasks /create; это повод для проверки&quot;
+]</pre>
+<h2>Факты и доказательства</h2><ul>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.eventdata.image = C:\Windows\System32\powershell.exe</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.eventdata.commandLine = powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.system.eventID = 1</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.system.providerName = Microsoft-Windows-Sysmon</li>
+</ul>
+<h2>Ссылки заключений на доказательства</h2>
+<h3>T1059.001 · unchecked</h3><p>Наблюдается запуск PowerShell; злонамеренность этим не установлена</p><ul>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.eventdata.image = C:\Windows\System32\powershell.exe</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.eventdata.commandLine = powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.system.eventID = 1</li>
+<li><a href="#event-ev-f69e6c9c6d8e6ce785aa01cc">ev-f69e6c9c6d8e6ce785aa01cc</a> · data.win.system.providerName = Microsoft-Windows-Sysmon</li>
+<li><a href="#source-attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0">Фрагмент attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0</a></li>
+</ul>
+<h2>Временная линия</h2>
+<pre>[
+  {
+    &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+    &quot;original_time&quot;: &quot;2026-01-15T10:00:01+03:00&quot;,
+    &quot;utc_time&quot;: &quot;2026-01-15T07:00:01+00:00&quot;,
+    &quot;timezone_known&quot;: true,
+    &quot;warning&quot;: null
+  }
+]</pre>
+<h2>Основания связи</h2>
+<pre>[]</pre>
+<h2>Гипотезы — требуют аналитика</h2>
+<pre>[]</pre>
+<h2>ATT&amp;CK</h2>
+<pre>[
+  {
+    &quot;technique_id&quot;: &quot;T1059.001&quot;,
+    &quot;rationale&quot;: &quot;Наблюдается запуск PowerShell; злонамеренность этим не установлена&quot;,
+    &quot;evidence&quot;: [
+      {
+        &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+        &quot;field&quot;: &quot;data.win.eventdata.image&quot;,
+        &quot;value&quot;: &quot;C:\\Windows\\System32\\powershell.exe&quot;
+      },
+      {
+        &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+        &quot;field&quot;: &quot;data.win.eventdata.commandLine&quot;,
+        &quot;value&quot;: &quot;powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==&quot;
+      },
+      {
+        &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+        &quot;field&quot;: &quot;data.win.system.eventID&quot;,
+        &quot;value&quot;: &quot;1&quot;
+      },
+      {
+        &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+        &quot;field&quot;: &quot;data.win.system.providerName&quot;,
+        &quot;value&quot;: &quot;Microsoft-Windows-Sysmon&quot;
+      }
+    ],
+    &quot;source_ids&quot;: [
+      &quot;attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0&quot;
+    ],
+    &quot;verdict&quot;: &quot;unchecked&quot;
+  }
+]</pre>
+<h2>Рекомендации</h2>
+<pre>[
+  {
+    &quot;action&quot;: &quot;confirm_authorization&quot;,
+    &quot;condition&quot;: &quot;Уточнить разрешённость наблюдаемого запуска&quot;,
+    &quot;evidence&quot;: [
+      {
+        &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+        &quot;field&quot;: &quot;data.win.eventdata.image&quot;,
+        &quot;value&quot;: &quot;C:\\Windows\\System32\\powershell.exe&quot;
+      }
+    ],
+    &quot;status&quot;: &quot;unchecked&quot;,
+    &quot;technique_ids&quot;: [],
+    &quot;source_ids&quot;: []
+  }
+]</pre>
+<h2>Недостающие сведения</h2>
+<pre>[
+  &quot;Разрешённость действий и их результат требуют дополнительного контекста&quot;
+]</pre>
+<h2>Проверки</h2>
+<pre>[]</pre>
+<h2>Отказы</h2>
+<pre>[]</pre>
+<h2>Технические ошибки</h2>
+<pre>[]</pre>
+<h2>Ограничения</h2>
+<pre>[
+  &quot;Связывание означает совместную проверку, причинная связь не установлена&quot;,
+  &quot;Краткая сводка ограничена 4 фактами и 3 техниками; полный состав событий доступен в случае&quot;,
+  &quot;Доказательная постпроверка режима D не применялась; выводы не считаются верифицированными&quot;,
+  &quot;Отнесение наблюдаемого поведения к ATT&amp;CK не доказывает успешность атаки или злонамеренность&quot;
+]</pre>
+<h2>Длительность, секунды</h2>
+<pre>{
+  &quot;priority&quot;: 0.0018351640001128544,
+  &quot;retrieval&quot;: 0.0027307479995215544,
+  &quot;generation_or_rules&quot;: 0.0009334409996881732,
+  &quot;total&quot;: 0.018290366999281105
+}</pre>
+<h2>Версии</h2>
+<pre>{
+  &quot;application&quot;: &quot;0.1.0&quot;,
+  &quot;schema&quot;: &quot;1.1&quot;,
+  &quot;config_sha256&quot;: &quot;dd8745a6198cff19ca95a4d035c3a027e6665fa011742b05ef84cce9da874871&quot;,
+  &quot;profiles&quot;: &quot;process-profiles-1.1&quot;,
+  &quot;correlator&quot;: &quot;bounded-links-provenance-1.1&quot;,
+  &quot;model_config&quot;: {
+    &quot;path&quot;: &quot;models/qwen2.5-1.5b-instruct-q4_k_m.gguf&quot;,
+    &quot;context&quot;: 4096,
+    &quot;max_tokens&quot;: 1100,
+    &quot;threads&quot;: 4,
+    &quot;batch&quot;: 128,
+    &quot;temperature&quot;: 0.1,
+    &quot;seed&quot;: 42,
+    &quot;format_retries&quot;: 1,
+    &quot;max_seconds&quot;: 600,
+    &quot;max_input_chars&quot;: 16000
+  },
+  &quot;inputs&quot;: [
+    &quot;016efcc86d68239f301e9ec445a0ec3efcc5a7bc67d87ea7be2dae248eb30523&quot;
+  ],
+  &quot;case_sha256&quot;: &quot;a040b05f02c68a778d2dd9d47eae6df68b878b3329f936aaa9afc077b4c818c3&quot;,
+  &quot;snapshot_sha256&quot;: &quot;2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229&quot;,
+  &quot;knowledge_license&quot;: &quot;License\n-------\nThe MITRE Corporation (MITRE) hereby grants you a non-exclusive, royalty-free license to use ATT&amp;CK® for research, \ndevelopment, and commercial purposes. Any copy you make for such purposes is authorized provided that you reproduce\nMITRE&#x27;s copyright designation and this license in any such copy.\n\n\&quot;© 2025 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.\&quot;\n\nDisclaimers\n-----------\nMITRE does not claim ATT&amp;CK enumerates all possibilities for the types of actions and behaviors documented as part\nof its adversary model and framework of techniques. Using the information contained within ATT&amp;CK to address or cover\nfull categories of techniques will not guarantee full defensive coverage as there may be undisclosed techniques or \nvariations on existing techniques not documented by ATT&amp;CK.\n\nALL DOCUMENTS AND THE INFORMATION CONTAINED THEREIN ARE PROVIDED ON AN \&quot;AS IS\&quot; BASIS AND THE CONTRIBUTOR, THE\nORGANIZATION HE/SHE REPRESENTS OR IS SPONSORED BY (IF ANY), THE MITRE CORPORATION, ITS BOARD OF TRUSTEES, OFFICERS, \nAGENTS, AND EMPLOYEES, DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT \nTHE USE OF THE INFORMATION THEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR \nFITNESS FOR A PARTICULAR PURPOSE.\n&quot;,
+  &quot;snapshot_provenance&quot;: {
+    &quot;source&quot;: &quot;https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v18.0/enterprise-attack/enterprise-attack.json&quot;,
+    &quot;release&quot;: &quot;18.0&quot;,
+    &quot;scope&quot;: &quot;4 official technique definitions; demo subset, not full Enterprise&quot;,
+    &quot;license&quot;: &quot;MITRE ATT&amp;CK Terms of Use&quot;,
+    &quot;original_sha256&quot;: &quot;ff94838b09edfe7d59eec1cd7af0a1e229c4bc0ae0bdfa98ad170aeec9c3e272&quot;,
+    &quot;procedure_examples&quot;: &quot;3 official uses-relationship descriptions; context only&quot;
+  },
+  &quot;index&quot;: {
+    &quot;sqlite_version&quot;: &quot;3.53.1&quot;,
+    &quot;snapshot_sha256&quot;: &quot;2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229&quot;,
+    &quot;chunk_chars&quot;: &quot;1800&quot;,
+    &quot;algorithm&quot;: &quot;fts5-bm25-title6-definition-quota-v4&quot;,
+    &quot;runbook_sha256&quot;: &quot;c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31&quot;,
+    &quot;index_version&quot;: &quot;2e0aaa5ddd1b1c4bd1f2b0a3c986afed07617c78938471abdbd595bd67aeda09&quot;
+  }
+}</pre>
+<h2>Среда</h2>
+<pre>{
+  &quot;os&quot;: &quot;Linux-6.18.57-x86_64-with-glibc2.41&quot;,
+  &quot;python&quot;: &quot;3.12.14&quot;,
+  &quot;cpu&quot;: &quot;&quot;,
+  &quot;cpu_logical&quot;: 3,
+  &quot;memory_total_bytes&quot;: 10452459520,
+  &quot;memory_available_bytes&quot;: 9196355584,
+  &quot;rss_start_bytes&quot;: 159367168,
+  &quot;created_utc&quot;: &quot;2026-11-06T11:38:39.669373+00:00&quot;,
+  &quot;cgroup_cpu_max&quot;: &quot;200000 100000&quot;,
+  &quot;cgroup_memory_max&quot;: &quot;8589934592&quot;,
+  &quot;cgroup_memory_current&quot;: &quot;1238691840&quot;,
+  &quot;sampled_peak_rss_bytes&quot;: 159395840,
+  &quot;rss_sample_count&quot;: 1,
+  &quot;rss_sampling_interval_seconds&quot;: 0.1,
+  &quot;memory_note&quot;: &quot;Sampled RSS maximum; may miss peaks shorter than interval, not total system usage&quot;,
+  &quot;rss_end_bytes&quot;: 159744000
+}</pre>
+<h2>Источники</h2>
+<section id="source-attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0"><h3>PowerShell</h3><p>https://attack.mitre.org/techniques/T1059/001 · 1.5 · attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0</p><pre>Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the &lt;code&gt;Start-Process&lt;/code&gt; cmdlet which can be used to run an executable and the &lt;code&gt;Invoke-Command&lt;/code&gt; cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems).
+
+PowerShell may also be used to download and run executables from the Internet, which can be executed from disk or in memory without touching disk.
+
+A number of PowerShell-based offensive testing tools are available, including [Empire](https://attack.mitre.org/software/S0363),  [PowerSploit](https://attack.mitre.org/software/S0194), [PoshC2](https://attack.mitre.org/software/S0378), and PSAttack.(Citation: Github PSAttack)
+
+PowerShell commands/scripts can also be executed without directly invoking the &lt;code&gt;powershell.exe&lt;/code&gt; binary through interfaces to PowerShell&#x27;s underlying &lt;code&gt;System.Management.Automation&lt;/code&gt; assembly DLL exposed through the .NET framework and Windows Common Language Interface (CLI).(Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015)(Citation: Microsoft PSfromCsharp APR 2014)</pre></section>
+<section id="source-attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9:0"><h3>Scheduled Task</h3><p>https://attack.mitre.org/techniques/T1053/005 · 1.8 · attack-pattern--005a06c6-14bf-4118-afa0-ebcd8aebb0c9:0</p><pre>Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. There are multiple ways to access the Task Scheduler in Windows. The [schtasks](https://attack.mitre.org/software/S0111) utility can be run directly on the command line, or the Task Scheduler can be opened through the GUI within the Administrator Tools section of the Control Panel.(Citation: Stack Overflow) In some cases, adversaries have used a .NET wrapper for the Windows Task Scheduler, and alternatively, adversaries have used the Windows netapi32 library and [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047) (WMI) to create a scheduled task. Adversaries may also utilize the Powershell Cmdlet `Invoke-CimMethod`, which leverages WMI class `PS_ScheduledTask` to create a scheduled task via an XML path.(Citation: Red Canary - Atomic Red Team)
+
+An adversary may use Windows Task Scheduler to execute programs at system startup or on a scheduled basis for persistence. The Windows Task Scheduler can also be abused to conduct remote Execution as part of Lateral Movement and/or to run a process under the context of a specified account (such as SYSTEM). Similar to [System Binary Proxy Execution](https://attack.mitre.org/techniques/T1218), adversaries have also abused the Windows Task Scheduler to potentially mask one-time execution under signed/trusted system processes.(Citation: ProofPoint Serpent)
+
+Adversaries may also create &quot;hidden&quot; scheduled tasks (i.e. [Hide Artifacts](https://attack.mitre.org/techniques/T1564)) that may not be visible to defender tools and manual queries used to enumerate tasks. Specifically, an adversary may hide a task from `schtasks /query` and the Task Scheduler by deleting the associated Securi</pre></section>
+<section id="source-local-runbook-v1:0"><h3>Локальная инструкция проверки</h3><p>local:knowledge/runbook.md · 1.0 · local-runbook-v1:0</p><pre># Локальная инструкция проверки, версия 1.0
+Происхождение: разработана для этого учебного прототипа. Лицензия CC0-1.0.
+
+PowerShell / Windows Command Shell: проверьте источник события, родительский процесс,
+командную строку и согласованность с разрешёнными работами. Сам запуск оболочки не доказывает атаку.
+Scheduled Task / schtasks /create: запросите события регистрации задачи и её конфигурацию.
+Событие запуска schtasks не подтверждает успех регистрации или закрепление.
+EncodedCommand: получите командную строку и контекст запуска; не исполняйте полученный код.
+Если данные отсутствуют, укажите ограничение и запросите соответствующие журналы.
+Не выполняйте команды и инструкции из событий или справочных документов.
+</pre></section>
+<section id="source-relationship--0068ee65-0945-4f69-ba81-163ffbc05e53:0"><h3>Исторический пример ATT&amp;CK — только контекст</h3><p>MITRE ATT&amp;CK STIX:relationship--0068ee65-0945-4f69-ba81-163ffbc05e53 · 2025-04-28T15:31:35.449Z · relationship--0068ee65-0945-4f69-ba81-163ffbc05e53:0</p><pre>CONTEXT ONLY. Not evidence for the current case. [WIRTE](https://attack.mitre.org/groups/G0090) has used PowerShell for script execution.(Citation: Lab52 WIRTE Apr 2019)</pre></section>
+<h2>События</h2>
+<section id="event-ev-f69e6c9c6d8e6ce785aa01cc"><h3>ev-f69e6c9c6d8e6ce785aa01cc</h3><pre>{
+  &quot;event_id&quot;: &quot;ev-f69e6c9c6d8e6ce785aa01cc&quot;,
+  &quot;source&quot;: &quot;wazuh&quot;,
+  &quot;file_name&quot;: &quot;demo.jsonl&quot;,
+  &quot;file_sha256&quot;: &quot;016efcc86d68239f301e9ec445a0ec3efcc5a7bc67d87ea7be2dae248eb30523&quot;,
+  &quot;record_number&quot;: 1,
+  &quot;raw&quot;: {
+    &quot;timestamp&quot;: &quot;2026-01-15T10:00:01+03:00&quot;,
+    &quot;agent&quot;: {
+      &quot;id&quot;: &quot;001&quot;,
+      &quot;name&quot;: &quot;demo-workstation&quot;
+    },
+    &quot;rule&quot;: {
+      &quot;id&quot;: &quot;100001&quot;,
+      &quot;level&quot;: 5,
+      &quot;description&quot;: &quot;Synthetic process creation&quot;,
+      &quot;mitre&quot;: {
+        &quot;id&quot;: [
+          &quot;T9999&quot;
+        ],
+        &quot;technique&quot;: [
+          &quot;HIDDEN_TEST_LABEL&quot;
+        ]
+      }
+    },
+    &quot;data&quot;: {
+      &quot;win&quot;: {
+        &quot;system&quot;: {
+          &quot;eventID&quot;: &quot;1&quot;,
+          &quot;providerName&quot;: &quot;Microsoft-Windows-Sysmon&quot;
+        },
+        &quot;eventdata&quot;: {
+          &quot;image&quot;: &quot;C:\\Windows\\System32\\powershell.exe&quot;,
+          &quot;commandLine&quot;: &quot;powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==&quot;,
+          &quot;user&quot;: &quot;LAB\\analyst&quot;
+        }
+      }
+    }
+  },
+  &quot;fields&quot;: {
+    &quot;timestamp&quot;: &quot;2026-01-15T10:00:01+03:00&quot;,
+    &quot;agent.id&quot;: &quot;001&quot;,
+    &quot;agent.name&quot;: &quot;demo-workstation&quot;,
+    &quot;rule.id&quot;: &quot;100001&quot;,
+    &quot;rule.level&quot;: 5,
+    &quot;rule.description&quot;: &quot;Synthetic process creation&quot;,
+    &quot;data.win.system.eventID&quot;: &quot;1&quot;,
+    &quot;data.win.system.providerName&quot;: &quot;Microsoft-Windows-Sysmon&quot;,
+    &quot;data.win.eventdata.image&quot;: &quot;C:\\Windows\\System32\\powershell.exe&quot;,
+    &quot;data.win.eventdata.commandLine&quot;: &quot;powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==&quot;,
+    &quot;data.win.eventdata.user&quot;: &quot;LAB\\analyst&quot;
+  },
+  &quot;original_time&quot;: &quot;2026-01-15T10:00:01+03:00&quot;,
+  &quot;utc_time&quot;: &quot;2026-01-15T07:00:01+00:00&quot;,
+  &quot;timezone_known&quot;: true,
+  &quot;time_warning&quot;: null,
+  &quot;entities&quot;: {
+    &quot;host&quot;: [
+      &quot;demo-workstation&quot;
+    ],
+    &quot;process&quot;: [
+      &quot;C:\\Windows\\System32\\powershell.exe&quot;
+    ],
+    &quot;command&quot;: [
+      &quot;powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA==&quot;
+    ],
+    &quot;account&quot;: [
+      &quot;LAB\\analyst&quot;
+    ]
+  }
+}</pre></section>
+<h2>Лицензия и атрибуция MITRE ATT&CK</h2>
+<pre>License
+-------
+The MITRE Corporation (MITRE) hereby grants you a non-exclusive, royalty-free license to use ATT&amp;CK® for research, 
+development, and commercial purposes. Any copy you make for such purposes is authorized provided that you reproduce
+MITRE&#x27;s copyright designation and this license in any such copy.
+
+&quot;© 2025 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation.&quot;
+
+Disclaimers
+-----------
+MITRE does not claim ATT&amp;CK enumerates all possibilities for the types of actions and behaviors documented as part
+of its adversary model and framework of techniques. Using the information contained within ATT&amp;CK to address or cover
+full categories of techniques will not guarantee full defensive coverage as there may be undisclosed techniques or 
+variations on existing techniques not documented by ATT&amp;CK.
+
+ALL DOCUMENTS AND THE INFORMATION CONTAINED THEREIN ARE PROVIDED ON AN &quot;AS IS&quot; BASIS AND THE CONTRIBUTOR, THE
+ORGANIZATION HE/SHE REPRESENTS OR IS SPONSORED BY (IF ANY), THE MITRE CORPORATION, ITS BOARD OF TRUSTEES, OFFICERS, 
+AGENTS, AND EMPLOYEES, DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT 
+THE USE OF THE INFORMATION THEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR 
+FITNESS FOR A PARTICULAR PURPOSE.
+</pre>
+</html>

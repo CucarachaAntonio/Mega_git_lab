@@ -1,0 +1,19 @@
+{
+  "modes": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "repeats": 3,
+  "split": "tune",
+  "scenarios": [
+    "ps_admin_1"
+  ],
+  "gold_sha256": "7c16915c85d1a6984f938469a57c1aafd18eb073df80eefe776323e2e3d0dc83",
+  "config_sha256": "dd8745a6198cff19ca95a4d035c3a027e6665fa011742b05ef84cce9da874871",
+  "schema_version": "1.1",
+  "prompt_state_reset_per_generation": true,
+  "memory_note": "Shared experiment keeps LLM weights resident during C; run C separately for standalone RSS",
+  "warning": "Engineering corpus only; no statistical superiority claim. Manual fields unfilled."
+}

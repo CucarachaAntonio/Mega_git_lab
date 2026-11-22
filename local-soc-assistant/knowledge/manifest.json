@@ -1,0 +1,19 @@
+{
+  "attack_release": "18.0",
+  "attack_original_url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/v18.0/enterprise-attack/enterprise-attack.json",
+  "attack_original_sha256": "ff94838b09edfe7d59eec1cd7af0a1e229c4bc0ae0bdfa98ad170aeec9c3e272",
+  "demo_sha256": "2442f67e053f18ec3462b516b50068876d5f9cf890c7ce4ec14c1af8a0f51229",
+  "demo_scope": "Official subset: three supported techniques plus unsupported T1003 for verification tests; includes applicable source objects",
+  "terms": "https://attack.mitre.org/resources/terms-of-use/",
+  "local_runbook": {
+    "file": "knowledge/runbook.md",
+    "version": "1.0",
+    "license": "CC0-1.0",
+    "sha256": "c2f07dab94d0dd4110d2036ad4e9b2e53c8a0bc23ed806e165adda4347fa5f31"
+  },
+  "context_examples": [
+    "relationship--005b6fd1-be80-424b-b6df-2ff88d390b1b",
+    "relationship--0068ee65-0945-4f69-ba81-163ffbc05e53",
+    "relationship--00fe415d-9364-4d03-95ee-f1413d996c30"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "modes": [
+    "C"
+  ],
+  "repeats": 3,
+  "split": "all",
+  "scenarios": [
+    "ps_admin_1",
+    "ps_admin_2",
+    "ps_encoded_1",
+    "ps_encoded_2",
+    "cmd_diagnostics_1",
+    "cmd_diagnostics_2",
+    "task_create_1",
+    "task_create_2",
+    "task_query_1",
+    "task_query_2",
+    "missing_command_1",
+    "missing_command_2",
+    "unknown_timezone_1",
+    "unknown_timezone_2",
+    "contradiction_1",
+    "contradiction_2",
+    "unknown_process_1",
+    "unknown_process_2",
+    "injection_1",
+    "injection_2",
+    "missing_provider_1",
+    "missing_provider_2",
+    "linked_shells_1",
+    "linked_shells_2"
+  ],
+  "gold_sha256": "7c16915c85d1a6984f938469a57c1aafd18eb073df80eefe776323e2e3d0dc83",
+  "dataset_version": "1.0",
+  "config_sha256": "ff212fe0ed538f6bb099182bdbb3d92d0b57f321a98d9a6cfe36f734871e8af9",
+  "schema_version": "1.2",
+  "prompt_state_reset_per_generation": true,
+  "paired_B_D_same_draft": true,
+  "experiment_kind": "local_model",
+  "generation_quality_evaluated": false,
+  "memory_note": "Shared experiment keeps LLM weights resident during C; run C separately for standalone RSS",
+  "warning": "Engineering corpus only; no statistical superiority claim. Manual fields unfilled."
+}
