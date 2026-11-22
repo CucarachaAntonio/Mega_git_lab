@@ -1,0 +1,32 @@
+{
+  "modes": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "repeats": 3,
+  "split": "all",
+  "scenarios": [
+    "control_legitimate",
+    "control_encoded",
+    "control_missing_command",
+    "control_field_conflict",
+    "control_time_conflict",
+    "control_bad_fact",
+    "control_bad_value",
+    "control_bad_source",
+    "control_wrong_technique",
+    "control_suricata_flow"
+  ],
+  "gold_sha256": "84c50625661173a53ca6e8e33b52a3a34e056a14ba558e5f9afc867e19824108",
+  "dataset_version": "controls-2.0",
+  "config_sha256": "ff212fe0ed538f6bb099182bdbb3d92d0b57f321a98d9a6cfe36f734871e8af9",
+  "schema_version": "1.2",
+  "prompt_state_reset_per_generation": true,
+  "paired_B_D_same_draft": true,
+  "experiment_kind": "saved_draft_mechanics",
+  "generation_quality_evaluated": false,
+  "memory_note": "Shared experiment keeps LLM weights resident during C; run C separately for standalone RSS",
+  "warning": "Engineering corpus only; no statistical superiority claim. Manual fields unfilled."
+}

@@ -7,7 +7,7 @@ from pathlib import Path
 from contextlib import closing
 from .schemas import Case, Chunk
 
-ALGORITHM = "fts5-bm25-title6-definition-quota-v4"
+ALGORITHM = "fts5-bm25-title6-definition-quota-offsets-v5"
 
 class SearchError(RuntimeError):
     pass
@@ -56,6 +56,15 @@ class Snapshot:
     def active(self, identifier: str):
         obj = self.techniques.get(identifier)
         return bool(obj and not obj.get("revoked") and not obj.get("x_mitre_deprecated"))
+
+    def enterprise(self, identifier: str):
+        obj = self.techniques.get(identifier, {})
+        # Older STIX did not always include x_mitre_domains. Only the pinned
+        # Enterprise subset's provenance may supply that omitted domain.
+        domains = obj.get("x_mitre_domains")
+        if domains is not None:
+            return "enterprise-attack" in domains
+        return "enterprise" in str(self.provenance).lower()
 
 def build_index(snapshot_path: Path, index_path: Path, chunk_chars: int = 1800, runbook: Path | None = None):
     snapshot = Snapshot(snapshot_path)
@@ -134,8 +143,12 @@ class Retriever:
             selected.append(row)
             if len(selected) >= limit:
                 break
+        size = int(self.metadata["chunk_chars"])
         return [Chunk(chunk_id=r[0], document_id=r[1], text=r[2], title=r[3], source=r[4], version=r[5],
-                      source_sha256=r[6], technique_id=r[7], score=-r[8]) for r in selected]
+                      source_sha256=r[6], technique_id=r[7], score=-r[8],
+                      start_char=int(r[0].rsplit(":", 1)[1]) * size,
+                      end_char=int(r[0].rsplit(":", 1)[1]) * size + len(r[2]),
+                      document_kind="attack_definition" if r[7] else "runbook" if r[1].startswith("local-runbook-") else "context") for r in selected]
 
 def case_query(case: Case) -> str:
     """Only observable normalized input; no dataset labels or Wazuh ATT&CK tags."""

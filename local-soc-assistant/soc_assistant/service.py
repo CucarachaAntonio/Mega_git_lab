@@ -10,16 +10,19 @@ import psutil
 from pydantic import ValidationError
 from . import __version__
 from .config import Settings
-from .schemas import SCHEMA_VERSION, Case, Check, Draft, Evidence, Finding, Recommendation, Report
+from .schemas import SCHEMA_VERSION, Case, Check, Draft, Evidence, Finding, Recommendation, Report, DraftBundle
 from .retrieval import ALGORITHM, Retriever, SearchError, Snapshot, case_query, file_hash
 from .profiles import PROFILE_VERSION, candidates
-from .priority import prioritize
-from .verification import verify
+from .priority import priority_context, priority_decision, PRIORITY_VERSION
+from .verification import verify, canonical_events, VERIFIER_VERSION, RECOMMENDATION_VERSION
 from .generation import InputBudgetError, LlamaRuntime, ModelUnavailable, ModelTimeoutError, OutputFormatError, GrammarCompileError, build_messages
 from .security import analysis_lock, offline_guard
 from .storage import Store
 from .resources import ResourceSampler
 from .correlate import CORRELATION_VERSION
+from .ingest import NORMALIZATION_VERSION
+from .evidence import MISSING, raw_field, digest
+from .replay import save_bundle, bundle_identity
 
 MODES = {"A": "LLM без RAG", "B": "LLM + RAG", "C": "Правила + RAG", "D": "LLM + RAG + верификация"}
 
@@ -95,24 +98,36 @@ def environment():
             result["cgroup_" + name.replace(".", "_")] = path.read_text().strip()
     return result
 
-def analyze(case: Case, mode: str, settings: Settings, runtime=None, progress=None, persist=True):
+def analyze(case: Case, mode: str, settings: Settings, runtime=None, progress=None, persist=True, reuse_bundle=None):
     if mode not in MODES:
         raise ValueError("Неизвестный режим")
     offline_guard()
     with analysis_lock(settings.path("data")):
-        return _analyze_locked(case, mode, settings, runtime, progress or (lambda *a: None), persist)
+        return _analyze_locked(case, mode, settings, runtime, progress or (lambda *a: None), persist, reuse_bundle)
 
-def _analyze_locked(case, mode, settings, runtime, progress, persist):
+def _analyze_locked(case, mode, settings, runtime, progress, persist, reuse_bundle=None):
     started = time.perf_counter()
     report = Report(run_id="run-" + uuid.uuid4().hex, case_id=case.case_id, mode=mode, status="completed",
                     versions={"application": __version__, "schema": SCHEMA_VERSION, "config_sha256": settings.fingerprint,
-                              "profiles": PROFILE_VERSION, "correlator": CORRELATION_VERSION, "model_config": settings.model.model_dump(),
+                              "profiles": PROFILE_VERSION, "correlator": CORRELATION_VERSION,
+                              "normalization": NORMALIZATION_VERSION, "verifier": VERIFIER_VERSION,
+                              "recommendation_rules": RECOMMENDATION_VERSION, "priority_policy": PRIORITY_VERSION,
+                              "instructions_sha256": digest(__import__("soc_assistant.generation", fromlist=["SYSTEM"]).SYSTEM), "model_config": settings.model.model_dump(),
                               "inputs": sorted({e.file_sha256 for e in case.events}),
-                              "case_sha256": __import__("hashlib").sha256(case.model_dump_json().encode()).hexdigest()},
+                              "case_sha256": digest(case.model_dump(exclude={"preparation_seconds"}))},
                     environment=environment(), links=case.links,
                     timeline=[{"event_id": e.event_id, "original_time": e.original_time, "utc_time": e.utc_time,
-                               "timezone_known": e.timezone_known, "warning": e.time_warning} for e in case.events],
+                               "timezone_known": e.timezone_known, "time_state": e.time_state,
+                               "timestamps": [t.model_dump() for t in e.timestamps], "warning": e.time_warning} for e in case.events],
                     limitations=list(case.warnings) + ["Краткая сводка ограничена 4 фактами и 3 техниками; полный состав событий доступен в случае"] )
+    # Observable input remains available even if later search/model stages fail.
+    report.observations = [Evidence(event_id=e.event_id, field=key, value=value,
+        source_id=e.source_id, record_id=e.record_id,
+        json_pointer=e.field_origins[key].json_pointer if key in e.field_origins else None)
+        for e in canonical_events(case).values() for key in e.fields
+        if (value := raw_field(e, key)) is not MISSING and type(value) in (str, int, float, bool, type(None))]
+    report.measurement = {"draft_reused": reuse_bundle is not None, "preparation_seconds": case.preparation_seconds,
+                          "latency_origin": "measured_wall_clock", "generation_quality_evaluated": False}
     owned_runtime = None
     finished = False
     runtime_was_loaded = bool(getattr(runtime, "model", None))
@@ -122,35 +137,66 @@ def _analyze_locked(case, mode, settings, runtime, progress, persist):
         progress("Проверка готовности", 5)
         if not case.events:
             raise ValueError("Случай не содержит событий")
-        ready = readiness(settings)
-        if not ready["snapshot"]["ok"]:
-            raise SearchError("Снимок ATT&CK отсутствует или повреждён")
-        if not ready["index"]["ok"]:
-            raise SearchError("Индекс отсутствует, повреждён или устарел")
-        snapshot = Snapshot(settings.path("snapshot"))
-        report.versions["snapshot_sha256"] = snapshot.sha256
-        license_path = settings.root / "docs/licenses/MITRE-ATTACK.txt"
-        if license_path.is_file():
-            report.versions["knowledge_license"] = license_path.read_text(encoding="utf-8")
-        report.versions["snapshot_provenance"] = snapshot.provenance
-        report.versions["index"] = ready["index"]["metadata"]
         stage = time.perf_counter()
-        report.priority, report.priority_reasons = prioritize(case, settings)
+        context = priority_context(settings)
+        decision = priority_decision(case, context)
+        report.priority, report.priority_reasons = decision["category"], decision["reasons"]
+        report.priority_assessment = {"status": "policy_applied", **decision, "context": context}
         report.durations["priority"] = time.perf_counter() - stage
+        snapshot = None
+        try:
+            snapshot = Snapshot(settings.path("snapshot"))
+            report.versions["snapshot_sha256"] = snapshot.sha256
+            report.versions["snapshot_provenance"] = snapshot.provenance
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            report.errors.append({"code": "knowledge_unavailable", "message": "Снимок ATT&CK недоступен; наблюдения сохранены"})
+        license_path = settings.root / "docs/licenses/MITRE-ATTACK.txt"
+        if license_path.is_file(): report.versions["knowledge_license"] = license_path.read_text(encoding="utf-8")
         chunks = []
-        if mode != "A":
+        if reuse_bundle is not None:
+            if mode != "D" or reuse_bundle.case.model_dump() != case.model_dump():
+                raise ValueError("Bundle does not belong to this case / mode")
+            if reuse_bundle.versions.get("snapshot_sha256") != report.versions.get("snapshot_sha256"):
+                report.errors.append({"code": "bundle_snapshot_mismatch", "message": "Снимок изменился; проверка использует текущий корпус"})
+            if reuse_bundle.priority_context != context:
+                report.errors.append({"code": "bundle_policy_mismatch", "message": "Политика или обогащение изменились; приоритет пересчитан"})
+            chunks = list(reuse_bundle.sources)
+            report.sources, report.retrieval = chunks, dict(reuse_bundle.retrieval)
+            report.versions["draft_origin_versions"] = reuse_bundle.versions
+            report.versions["runtime"] = reuse_bundle.versions.get("runtime", {})
+            report.draft_id = reuse_bundle.bundle_id
+            report.draft_ref = str(settings.path("data") / "drafts" / (reuse_bundle.bundle_id + ".json"))
+            report.measurement.update({"origin_run_id": reuse_bundle.origin_run_id,
+                "origin_mode": reuse_bundle.origin_mode, "origin_durations": reuse_bundle.durations,
+                "latency_origin": "measured_replay_plus_composed_full_pass"})
+        elif mode != "A":
             progress("Поиск источников", 15)
             stage = time.perf_counter()
             query = case_query(case)
-            chunks = Retriever(settings.path("index")).search(query, settings.limits.rag_top_k)
+            try:
+                if snapshot is None: raise SearchError("Снимок недоступен")
+                index = Retriever(settings.path("index"))
+                if (index.metadata.get("snapshot_sha256") != snapshot.sha256 or
+                    index.metadata.get("algorithm") != ALGORITHM or
+                    index.metadata.get("chunk_chars") != str(settings.limits.rag_chunk_chars) or
+                    index.metadata.get("runbook_sha256") != (file_hash(settings.root / "knowledge/runbook.md") if (settings.root / "knowledge/runbook.md").exists() else "none")):
+                    raise SearchError("Индекс устарел; prepare --index")
+                chunks = index.search(query, settings.limits.rag_top_k)
+                report.versions["index"] = index.metadata
+                report.retrieval = {"status": "found" if chunks else "no_results", "query": query,
+                    "chunk_ids": [c.chunk_id for c in chunks], "index_version": index.metadata["index_version"],
+                    "parameters": {"top_k": settings.limits.rag_top_k, "chunk_chars": settings.limits.rag_chunk_chars, "algorithm": ALGORITHM}}
+            except SearchError:
+                report.errors.append({"code": "retrieval_failure", "message": "Локальный поиск недоступен; работа продолжается с исходными наблюдениями"})
+                report.retrieval = {"status": "technical_error", "query": query}
             report.sources = chunks
-            report.retrieval = {"status": "found" if chunks else "no_results", "query": query,
-                                "chunk_ids": [c.chunk_id for c in chunks], "index_version": ready["index"]["metadata"]["index_version"]}
             report.durations["retrieval"] = time.perf_counter() - stage
         else:
             report.retrieval = {"status": "disabled_for_mode_A"}
         stage = time.perf_counter()
-        if mode == "C":
+        if reuse_bundle is not None:
+            draft = reuse_bundle.draft.model_copy(deep=True)
+        elif mode == "C":
             progress("Применение фиксированных правил", 40)
             draft = rule_draft(case, chunks)
         else:
@@ -203,15 +249,47 @@ def _analyze_locked(case, mode, settings, runtime, progress, persist):
             if draft is None:
                 raise OutputFormatError("Все разрешённые попытки формирования схемы исчерпаны")
         report.durations["generation_or_rules"] = time.perf_counter() - stage
+        if reuse_bundle is None:
+            bundle = DraftBundle(bundle_id="", case=case, draft=draft.model_copy(deep=True), sources=chunks,
+                versions=dict(report.versions), retrieval=dict(report.retrieval), priority_context=context,
+                attempts=report.attempts, durations=dict(report.durations), origin_run_id=report.run_id, origin_mode=mode)
+            bundle.bundle_id = bundle_identity(bundle)
+            report.draft_id = bundle.bundle_id
+            report.draft_ref = str(settings.path("data") / "drafts" / (bundle.bundle_id + ".json"))
+            if persist: save_bundle(bundle, settings.path("data") / "drafts")
+        elif persist:
+            save_bundle(reuse_bundle, settings.path("data") / "drafts")
         # Never trust statuses supplied by the LLM in A/B/C.
         for finding in draft.techniques:
             finding.verdict = "unchecked"
+            finding.identity_check = finding.observation_check = finding.support_state = "unchecked"
         for rec in draft.recommendations:
             rec.status = "unchecked"
         if mode == "D":
             progress("Проверка доказательств", 80)
             stage = time.perf_counter()
-            draft, report.checks, report.refusals = verify(draft, case, snapshot, chunks)
+            draft, report.checks, report.refusals = verify(draft, case, snapshot, chunks,
+                priority_context=context, window_seconds=settings.limits.window_seconds,
+                max_case_events=settings.limits.max_case_events,
+                enabled=settings.correlation.enabled, runbook=settings.root / "knowledge/runbook.md")
+            report.fact_assessments = [c.model_dump() for c in report.checks if c.target.startswith("fact:")]
+            verified_events = list(canonical_events(case).values())
+            verified_case = case.model_copy(update={"events": verified_events})
+            verified_decision = priority_decision(verified_case, context)
+            report.priority, report.priority_reasons = verified_decision["category"], verified_decision["reasons"]
+            report.priority_assessment.update(verified_decision)
+            report.timeline = [{"event_id": e.event_id, "original_time": e.original_time, "utc_time": e.utc_time,
+                "timezone_known": e.timezone_known, "time_state": e.time_state, "comparable": e.can_compare_time,
+                "timestamps": [t.model_dump() for t in e.timestamps], "warning": e.time_warning} for e in verified_events]
+            report.priority_assessment["status"] = "verified" if any(c.target == "priority" and c.status == "passed" for c in report.checks) else "not_verified"
+            if report.priority_assessment["status"] != "verified":
+                report.priority = "unknown"
+                report.priority_reasons.append("Основания приоритета не прошли проверку")
+            invalid_links = {int(c.target.split(":")[1]) for c in report.checks if c.target.startswith("prepared_link:") and c.status == "failed"}
+            report.links = [link for i, link in enumerate(case.links) if i not in invalid_links]
+            report.confirmation = ("conflicting" if any(f.support_state == "contradicted" for f in draft.techniques) else
+                "supported_observations" if any(f.verdict == "supported" for f in draft.techniques) else
+                "candidate_only" if any(f.verdict == "analyst_required" for f in draft.techniques) else "insufficient")
             report.durations["verification"] = time.perf_counter() - stage
             supported = any(f.verdict == "supported" for f in draft.techniques)
             if report.refusals:
@@ -239,6 +317,7 @@ def _analyze_locked(case, mode, settings, runtime, progress, persist):
             report.checks.append(Check(target="declared_abstentions", code="declared_abstention_not_verified", status="not_checked",
                 detail="Самостоятельные текстовые отказы модели не доказаны; проверенные отказы представлены отдельными кодами условий профиля"))
         report.limitations.append("Отнесение наблюдаемого поведения к ATT&CK не доказывает успешность атаки или злонамеренность")
+        if report.errors and report.status == "completed": report.status = "partial"
         finished = True
     except (Exception, KeyboardInterrupt) as exc:
         if isinstance(exc, KeyboardInterrupt):
@@ -269,6 +348,17 @@ def _analyze_locked(case, mode, settings, runtime, progress, persist):
         if owned_runtime:
             owned_runtime.close()
         report.durations["total"] = time.perf_counter() - started
+        report.durations["full_pass"] = report.durations["total"] + case.preparation_seconds
+        if reuse_bundle is not None:
+            # Composed estimate; do not claim a second independent D generation.
+            report.durations["full_pass"] += sum(reuse_bundle.durations.get(k, 0) for k in ("priority", "retrieval", "generation_or_rules"))
+        report.measurement["full_pass_seconds_kind"] = "composed" if reuse_bundle else "measured_analysis_plus_preparation"
+        if report.draft_ref and persist and reuse_bundle is None:
+            bundle_path = __import__("pathlib").Path(report.draft_ref)
+            if bundle_path.is_file():
+                saved = DraftBundle.model_validate_json(bundle_path.read_text(encoding="utf-8"))
+                saved.durations = dict(report.durations)
+                bundle_path.write_text(saved.model_dump_json(indent=2), encoding="utf-8")
         memory = psutil.Process().memory_info()
         report.environment["rss_end_bytes"] = memory.rss
         if hasattr(memory, "peak_wset"):

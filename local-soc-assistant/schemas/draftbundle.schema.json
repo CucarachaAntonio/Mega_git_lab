@@ -1,0 +1,1020 @@
+{
+  "$defs": {
+    "Case": {
+      "additionalProperties": false,
+      "properties": {
+        "case_id": {
+          "title": "Case Id",
+          "type": "string"
+        },
+        "events": {
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/$defs/Link"
+          },
+          "title": "Links",
+          "type": "array"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "memberships": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/RecordOrigin"
+            },
+            "type": "array"
+          },
+          "title": "Memberships",
+          "type": "object"
+        },
+        "preparation_seconds": {
+          "default": 0.0,
+          "title": "Preparation Seconds",
+          "type": "number"
+        }
+      },
+      "required": [
+        "case_id",
+        "events"
+      ],
+      "title": "Case",
+      "type": "object"
+    },
+    "Chunk": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        },
+        "source_sha256": {
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "technique_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Technique Id"
+        },
+        "score": {
+          "default": 0,
+          "title": "Score",
+          "type": "number"
+        },
+        "start_char": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Char"
+        },
+        "end_char": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Char"
+        },
+        "document_kind": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "attack_definition",
+            "runbook",
+            "context"
+          ],
+          "title": "Document Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "document_id",
+        "text",
+        "title",
+        "source",
+        "version",
+        "source_sha256"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    },
+    "Draft": {
+      "additionalProperties": false,
+      "properties": {
+        "facts": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 4,
+          "title": "Facts",
+          "type": "array"
+        },
+        "hypotheses": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Hypotheses",
+          "type": "array"
+        },
+        "techniques": {
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "maxItems": 3,
+          "title": "Techniques",
+          "type": "array"
+        },
+        "recommendations": {
+          "items": {
+            "$ref": "#/$defs/Recommendation"
+          },
+          "maxItems": 2,
+          "title": "Recommendations",
+          "type": "array"
+        },
+        "missing": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Missing",
+          "type": "array"
+        },
+        "abstentions": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Abstentions",
+          "type": "array"
+        },
+        "timeline": {
+          "items": {
+            "$ref": "#/$defs/TimelineClaim"
+          },
+          "maxItems": 16,
+          "title": "Timeline",
+          "type": "array"
+        },
+        "links": {
+          "items": {
+            "$ref": "#/$defs/LinkClaim"
+          },
+          "maxItems": 16,
+          "title": "Links",
+          "type": "array"
+        },
+        "priority": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PriorityClaim"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Draft",
+      "type": "object"
+    },
+    "Event": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "source": {
+          "default": "wazuh",
+          "title": "Source",
+          "type": "string"
+        },
+        "file_name": {
+          "title": "File Name",
+          "type": "string"
+        },
+        "file_sha256": {
+          "title": "File Sha256",
+          "type": "string"
+        },
+        "record_number": {
+          "title": "Record Number",
+          "type": "integer"
+        },
+        "raw": {
+          "additionalProperties": true,
+          "title": "Raw",
+          "type": "object"
+        },
+        "fields": {
+          "additionalProperties": true,
+          "title": "Fields",
+          "type": "object"
+        },
+        "original_time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Original Time"
+        },
+        "utc_time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Utc Time"
+        },
+        "timezone_known": {
+          "title": "Timezone Known",
+          "type": "boolean"
+        },
+        "time_warning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time Warning"
+        },
+        "entities": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Entities",
+          "type": "object"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Id"
+        },
+        "record_id_kind": {
+          "default": "content_hash",
+          "enum": [
+            "native",
+            "content_hash"
+          ],
+          "title": "Record Id Kind",
+          "type": "string"
+        },
+        "field_origins": {
+          "additionalProperties": {
+            "$ref": "#/$defs/FieldOrigin"
+          },
+          "title": "Field Origins",
+          "type": "object"
+        },
+        "excluded_fields": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Excluded Fields",
+          "type": "object"
+        },
+        "source_annotations": {
+          "additionalProperties": {
+            "$ref": "#/$defs/FieldOrigin"
+          },
+          "title": "Source Annotations",
+          "type": "object"
+        },
+        "enrichments": {
+          "additionalProperties": {
+            "$ref": "#/$defs/FieldOrigin"
+          },
+          "title": "Enrichments",
+          "type": "object"
+        },
+        "timestamps": {
+          "items": {
+            "$ref": "#/$defs/TimeMark"
+          },
+          "title": "Timestamps",
+          "type": "array"
+        },
+        "time_state": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "comparable",
+            "missing",
+            "invalid",
+            "unknown_timezone",
+            "conflicting",
+            "incomparable"
+          ],
+          "title": "Time State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "file_name",
+        "file_sha256",
+        "record_number",
+        "raw",
+        "fields",
+        "original_time",
+        "utc_time",
+        "timezone_known"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Id"
+        },
+        "json_pointer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Json Pointer"
+        }
+      },
+      "required": [
+        "event_id",
+        "field",
+        "value"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "FieldOrigin": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "json_pointer": {
+          "title": "Json Pointer",
+          "type": "string"
+        },
+        "kind": {
+          "default": "original",
+          "enum": [
+            "original",
+            "enriched"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "origin": {
+          "default": "input_record",
+          "title": "Origin",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "source_id",
+        "record_id",
+        "json_pointer"
+      ],
+      "title": "FieldOrigin",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "properties": {
+        "technique_id": {
+          "pattern": "^T[0-9]{4}([.][0-9]{3})?$",
+          "title": "Technique Id",
+          "type": "string"
+        },
+        "rationale": {
+          "maxLength": 300,
+          "title": "Rationale",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 4,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Source Ids",
+          "type": "array"
+        },
+        "verdict": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "rejected",
+            "analyst_required"
+          ],
+          "title": "Verdict",
+          "type": "string"
+        },
+        "identity_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Identity Check",
+          "type": "string"
+        },
+        "observation_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Observation Check",
+          "type": "string"
+        },
+        "support_state": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "contradicted",
+            "insufficient",
+            "not_verifiable"
+          ],
+          "title": "Support State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "technique_id",
+        "rationale",
+        "evidence"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "Link": {
+      "additionalProperties": false,
+      "properties": {
+        "from_event": {
+          "title": "From Event",
+          "type": "string"
+        },
+        "to_event": {
+          "title": "To Event",
+          "type": "string"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "delta_seconds": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Delta Seconds"
+        },
+        "kind": {
+          "default": "temporal",
+          "enum": [
+            "temporal",
+            "identifier"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_event",
+        "to_event",
+        "rule",
+        "reasons",
+        "delta_seconds"
+      ],
+      "title": "Link",
+      "type": "object"
+    },
+    "LinkClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "from_event": {
+          "title": "From Event",
+          "type": "string"
+        },
+        "to_event": {
+          "title": "To Event",
+          "type": "string"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "delta_seconds": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delta Seconds"
+        },
+        "kind": {
+          "default": "temporal",
+          "enum": [
+            "temporal",
+            "identifier",
+            "causal"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_event",
+        "to_event",
+        "rule"
+      ],
+      "title": "LinkClaim",
+      "type": "object"
+    },
+    "PriorityClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 8,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "asset_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Asset Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category"
+      ],
+      "title": "PriorityClaim",
+      "type": "object"
+    },
+    "Recommendation": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "enum": [
+            "review_process",
+            "collect_logs",
+            "check_account",
+            "confirm_authorization"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "condition": {
+          "maxLength": 400,
+          "title": "Condition",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 4,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "status": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "analyst_required",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "hypothesis_indices": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 3,
+          "title": "Hypothesis Indices",
+          "type": "array"
+        },
+        "missing_fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Missing Fields",
+          "type": "array"
+        },
+        "technique_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Technique Ids",
+          "type": "array"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "title": "Source Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action",
+        "condition"
+      ],
+      "title": "Recommendation",
+      "type": "object"
+    },
+    "RecordOrigin": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "file_sha256": {
+          "title": "File Sha256",
+          "type": "string"
+        },
+        "file_name": {
+          "title": "File Name",
+          "type": "string"
+        },
+        "record_number": {
+          "title": "Record Number",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "record_id",
+        "file_sha256",
+        "file_name",
+        "record_number"
+      ],
+      "title": "RecordOrigin",
+      "type": "object"
+    },
+    "TimeMark": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "original": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Original"
+        },
+        "utc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Utc"
+        },
+        "timezone_known": {
+          "title": "Timezone Known",
+          "type": "boolean"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "original",
+        "utc",
+        "timezone_known",
+        "role"
+      ],
+      "title": "TimeMark",
+      "type": "object"
+    },
+    "TimelineClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "utc_time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Utc Time"
+        }
+      },
+      "required": [
+        "event_id",
+        "utc_time"
+      ],
+      "title": "TimelineClaim",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "1.2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "bundle_id": {
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "case": {
+      "$ref": "#/$defs/Case"
+    },
+    "draft": {
+      "$ref": "#/$defs/Draft"
+    },
+    "sources": {
+      "items": {
+        "$ref": "#/$defs/Chunk"
+      },
+      "title": "Sources",
+      "type": "array"
+    },
+    "versions": {
+      "additionalProperties": true,
+      "title": "Versions",
+      "type": "object"
+    },
+    "retrieval": {
+      "additionalProperties": true,
+      "title": "Retrieval",
+      "type": "object"
+    },
+    "priority_context": {
+      "additionalProperties": true,
+      "title": "Priority Context",
+      "type": "object"
+    },
+    "attempts": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Attempts",
+      "type": "array"
+    },
+    "durations": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Durations",
+      "type": "object"
+    },
+    "origin_run_id": {
+      "title": "Origin Run Id",
+      "type": "string"
+    },
+    "origin_mode": {
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "title": "Origin Mode",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bundle_id",
+    "case",
+    "draft",
+    "origin_run_id",
+    "origin_mode"
+  ],
+  "title": "DraftBundle",
+  "type": "object",
+  "$id": "urn:local-soc-assistant:draftbundle:1.2"
+}

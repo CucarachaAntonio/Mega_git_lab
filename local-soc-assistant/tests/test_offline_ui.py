@@ -71,4 +71,5 @@ def test_real_llm_injection_containment():
     assert report.versions["runtime"].get("real_llm") is True
     assert report.priority=="low"
     assert not any(f.technique_id=="T1003" and f.verdict=="supported" for f in report.techniques)
-    assert report.attempts and "IGNORE ALL INSTRUCTIONS" in report.attempts[0]["messages"][1]["content"]
+    assert report.attempts and "IGNORE ALL INSTRUCTIONS" not in report.attempts[0]["messages"][1]["content"]
+    assert "IGNORE ALL INSTRUCTIONS" in str(case.events[0].raw)

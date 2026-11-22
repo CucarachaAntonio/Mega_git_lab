@@ -33,4 +33,4 @@ high_on_critical_asset_and_indicator = true
 critical_assets = ["critical"]
 
 [correlation]
-enabled = ["same_host_process_v1", "same_host_account_v1"]
+enabled = ["same_host_process_v1", "same_host_account_v1", "same_flow_v1"]

@@ -1,0 +1,170 @@
+[
+  {
+    "name": "pip-check",
+    "command": [
+      "python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.3103585110002314
+  },
+  {
+    "name": "tests",
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 2.456322500999704
+  },
+  {
+    "name": "schemas",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "schemas"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.18516093000016554
+  },
+  {
+    "name": "prepare-index",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "prepare",
+      "--index"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.1550291229996219
+  },
+  {
+    "name": "readiness",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "ready"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.14638946699960798
+  },
+  {
+    "name": "demo-C",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "demo",
+      "--mode",
+      "C",
+      "--out",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/demo-C"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.16057957100019848
+  },
+  {
+    "name": "verify-saved",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "verify",
+      "--bundle",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/demo-C/draft.bundle.json",
+      "--out",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/verified"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.16132387900006506
+  },
+  {
+    "name": "model-unavailable",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "demo",
+      "--mode",
+      "D",
+      "--out",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/model-unavailable"
+    ],
+    "returncode": 2,
+    "expected_returncode": 2,
+    "seconds": 0.16499501199996303
+  },
+  {
+    "name": "C-original-corpus",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "experiment",
+      "--modes",
+      "C",
+      "--split",
+      "all",
+      "--out",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/C-original"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 0.3999100820001331
+  },
+  {
+    "name": "controls-four-modes",
+    "command": [
+      "python",
+      "-m",
+      "soc_assistant.cli",
+      "experiment",
+      "--modes",
+      "A",
+      "B",
+      "C",
+      "D",
+      "--repeats",
+      "3",
+      "--split",
+      "all",
+      "--gold",
+      "evaluation/controls.json",
+      "--replay-dir",
+      "examples/drafts",
+      "--out",
+      "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/controls"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": 1.4423382640002274
+  },
+  {
+    "name": "tests-without-OS-socket-permission",
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "--deselect=tests/test_offline_ui.py::test_external_network_blocked_localhost_allowed"
+    ],
+    "returncode": 0,
+    "expected_returncode": 0,
+    "seconds": null,
+    "note": "87 passed, 3 skipped, 1 deselected; loopback guard test separately passed in full suite"
+  }
+]

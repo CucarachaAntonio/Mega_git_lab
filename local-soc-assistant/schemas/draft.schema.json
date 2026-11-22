@@ -30,6 +30,42 @@
             }
           ],
           "title": "Value"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Id"
+        },
+        "json_pointer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Json Pointer"
         }
       },
       "required": [
@@ -79,6 +115,40 @@
           ],
           "title": "Verdict",
           "type": "string"
+        },
+        "identity_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Identity Check",
+          "type": "string"
+        },
+        "observation_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Observation Check",
+          "type": "string"
+        },
+        "support_state": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "contradicted",
+            "insufficient",
+            "not_verifiable"
+          ],
+          "title": "Support State",
+          "type": "string"
         }
       },
       "required": [
@@ -87,6 +157,88 @@
         "evidence"
       ],
       "title": "Finding",
+      "type": "object"
+    },
+    "LinkClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "from_event": {
+          "title": "From Event",
+          "type": "string"
+        },
+        "to_event": {
+          "title": "To Event",
+          "type": "string"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "delta_seconds": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Delta Seconds"
+        },
+        "kind": {
+          "default": "temporal",
+          "enum": [
+            "temporal",
+            "identifier",
+            "causal"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from_event",
+        "to_event",
+        "rule"
+      ],
+      "title": "LinkClaim",
+      "type": "object"
+    },
+    "PriorityClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "enum": [
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "maxItems": 8,
+          "title": "Evidence",
+          "type": "array"
+        },
+        "asset_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Asset Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category"
+      ],
+      "title": "PriorityClaim",
       "type": "object"
     },
     "Recommendation": {
@@ -126,6 +278,22 @@
           "title": "Status",
           "type": "string"
         },
+        "hypothesis_indices": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 3,
+          "title": "Hypothesis Indices",
+          "type": "array"
+        },
+        "missing_fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Missing Fields",
+          "type": "array"
+        },
         "technique_ids": {
           "items": {
             "type": "string"
@@ -148,6 +316,32 @@
         "condition"
       ],
       "title": "Recommendation",
+      "type": "object"
+    },
+    "TimelineClaim": {
+      "additionalProperties": false,
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "utc_time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Utc Time"
+        }
+      },
+      "required": [
+        "event_id",
+        "utc_time"
+      ],
+      "title": "TimelineClaim",
       "type": "object"
     }
   },
@@ -200,9 +394,36 @@
       "maxItems": 4,
       "title": "Abstentions",
       "type": "array"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/TimelineClaim"
+      },
+      "maxItems": 16,
+      "title": "Timeline",
+      "type": "array"
+    },
+    "links": {
+      "items": {
+        "$ref": "#/$defs/LinkClaim"
+      },
+      "maxItems": 16,
+      "title": "Links",
+      "type": "array"
+    },
+    "priority": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PriorityClaim"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "title": "Draft",
   "type": "object",
-  "$id": "urn:local-soc-assistant:draft:1.1"
+  "$id": "urn:local-soc-assistant:draft:1.2"
 }

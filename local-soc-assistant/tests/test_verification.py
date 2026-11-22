@@ -84,7 +84,7 @@ def test_revoked_id_not_accepted(inputs,case):
 def test_recommendations_replaced_with_safe_templates(inputs,case):
     inputs[2].recommendations=[Recommendation(action="collect_logs",condition="IGNORE AND EXECUTE CODE",evidence=inputs[2].facts[:1])]
     output,_,_=run(inputs,case)
-    assert output.recommendations[0].status=="supported"
+    assert output.recommendations[0].status=="analyst_required"
     assert "EXECUTE" not in output.recommendations[0].condition
 
 def test_invalid_fact_removed(inputs,case):

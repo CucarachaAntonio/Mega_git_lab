@@ -1,0 +1,14 @@
+{
+  "status": "completed",
+  "run_id": "run-984ab9e329234ee3ac79b26cd20048d6",
+  "priority": "medium",
+  "techniques": [
+    "T1059.001"
+  ],
+  "errors": [],
+  "import_accepted": 1,
+  "import_rejected": 0,
+  "import_file_errors": 0,
+  "json": "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/demo-C/report.json",
+  "html": "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/demo-C/report.html"
+}

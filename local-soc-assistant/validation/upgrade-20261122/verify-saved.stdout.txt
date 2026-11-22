@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "draft_id": "draft-e94436f59b52fec6b3877f7aede450d7c9dc056a71bb6fd1b63de1bfa59d4fc4",
+  "model_called": false,
+  "checks": 12,
+  "errors": [],
+  "json": "/workspace/work/repository/local-soc-assistant/data/upgrade-validation-work/2343dca6a46d4e2e9637a45b8b387424/verified/report.json"
+}

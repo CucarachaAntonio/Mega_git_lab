@@ -32,7 +32,7 @@ class ModelConfig(BaseModel):
 
 class Correlation(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    enabled: list[Literal["same_host_process_v1", "same_host_account_v1"]] = ["same_host_process_v1", "same_host_account_v1"]
+    enabled: list[Literal["same_host_process_v1", "same_host_account_v1", "same_flow_v1"]] = ["same_host_process_v1", "same_host_account_v1", "same_flow_v1"]
 
 class Settings(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)

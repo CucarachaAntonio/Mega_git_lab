@@ -79,3 +79,22 @@ python3.12 -m venv .venv
 CC=gcc CXX=g++ CMAKE_ARGS='-DGGML_CUDA=OFF -DGGML_NATIVE=OFF -DGGML_OPENMP=OFF -DGGML_BLAS=OFF -DLLAMA_CURL=OFF' \
 CMAKE_BUILD_PARALLEL_LEVEL=4 .venv/bin/python -m pip install --no-binary=llama-cpp-python llama-cpp-python==0.3.18
 ```
+
+
+## Обновление 0.2.0 и VS Code
+
+Новых Python-библиотек для доработки нет: используются прежние requirements и lock.
+В VS Code выберите интерпретатор `.venv\Scripts\python.exe` через
+Python: Select Interpreter. Расширения Microsoft Python/Pylance помогают редактору,
+но не заменяют установку пакетов в виртуальное окружение.
+После обновления исходников перестройте индекс:
+
+```powershell
+.\.venv\Scripts\python.exe -m soc_assistant.cli prepare --index
+.\.venv\Scripts\python.exe -m soc_assistant.cli demo --mode C --out data\demo-C
+.\.venv\Scripts\python.exe -m soc_assistant.cli verify --bundle data\demo-C\draft.bundle.json --out data\verified
+```
+
+Эти команды используют локальные файлы и не требуют GGUF. Для генерации A/B/D
+по-прежнему нужен CPU-рантайм и подготовленная модель. Повторная проверка bundle
+не вызывает LLM. Проверка Windows в стенде доработки не выполнялась.

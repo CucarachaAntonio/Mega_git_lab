@@ -40,3 +40,9 @@ MITRE: © 2025 The MITRE Corporation. This work is reproduced and distributed wi
 Зависимости Python имеют собственные лицензии. Прямые версии зафиксированы в pyproject.toml,
 набор установленных версий — requirements-lock.txt, необязательный рантайм — requirements-llm.txt.
 Windows-зависимость colorama указана условно; весь Linux freeze не считается проверкой Windows.
+
+## Источники проектных решений доработки
+
+Связь предоставленной литературы с нормализацией, RAG, верификацией и методикой
+описана в [THESIS-TRACEABILITY.md](THESIS-TRACEABILITY.md). Там отдельно указаны
+недоступные материалы и пределы подтверждения библиографических положений.

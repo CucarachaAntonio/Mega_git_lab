@@ -21,6 +21,10 @@ def show_event(event):
     st.json(event.fields, expanded=False)
     with st.expander("Исходная запись — только для аудита, включая исключённые метки"):
         st.json(event.raw)
+    st.text(f"Источник: {event.source_id} · запись источника: {event.record_id}")
+    with st.expander("Происхождение полей и исключённые аннотации"):
+        st.json({k: v.model_dump() for k, v in event.field_origins.items()})
+        st.json(event.excluded_fields)
     st.caption(f"SHA-256 файла: {event.file_sha256}")
 
 def show_report(report, case, prefix="report"):
@@ -30,15 +34,20 @@ def show_report(report, case, prefix="report"):
     col3.metric("Время, с", f"{report.durations.get('total', 0):.2f}")
     st.caption(f"Статус: {STATUSES[report.status]} · {report.run_id}")
     for reason in report.priority_reasons: st.write("• " + reason)
+    st.text(f"Степень подтверждения: {report.confirmation}; срочность определяется отдельно")
     if report.errors:
-        st.error("Анализ завершился технической ошибкой. Это не доказательный отказ.")
+        st.warning("Есть технические ограничения этапов. Доступные наблюдения сохранены; ошибка не считается доказательным отказом.")
         st.json(report.errors)
     facts_tab, techniques_tab, rec_tab, checks_tab, provenance_tab = st.tabs(["Факты и гипотезы", "ATT&CK", "Рекомендации и отказ", "Проверки", "Источники и версии"])
     events = {event.event_id: event for event in case.events} if case else {}
     with facts_tab:
         st.subheader("Факты: значения полей")
         if report.mode != "D": st.info("Заявленные факты не проходили доказательную постпроверку режима D.")
-        if not report.facts: st.write("Нет фактов в ответе.")
+        if not report.facts: st.write("Черновик не содержит подтверждённых фактов; исходные наблюдения доступны ниже.")
+        with st.expander("Наблюдения из исходных полей — без интерпретации"):
+            st.json([r.model_dump() for r in report.observations])
+        with st.expander("Результаты проверки заявленных фактов"):
+            st.json(report.fact_assessments)
         for index, fact in enumerate(report.facts):
             st.code(f"{fact.field} = {fact.value}", language=None)
             st.text(fact.event_id)
@@ -56,6 +65,7 @@ def show_report(report, case, prefix="report"):
         for index, finding in enumerate(report.techniques):
             with st.expander(f"{finding.technique_id} · {VERDICTS[finding.verdict]}", expanded=True):
                 st.text(finding.rationale)
+                st.text(f"Код ATT&CK: {finding.identity_check} · наблюдения: {finding.observation_check} · опора: {finding.support_state}")
                 st.json([ref.model_dump() for ref in finding.evidence])
                 for ref in finding.evidence:
                     if ref.event_id in events:
@@ -75,12 +85,15 @@ def show_report(report, case, prefix="report"):
             st.write(ACTIONS[rec.action] + " · " + ("Основание проверено, применён локальный шаблон" if rec.status == "supported" else VERDICTS[rec.status]))
             st.text(rec.condition)
             st.json([ref.model_dump() for ref in rec.evidence], expanded=False)
+            st.text("Уточнить поля: " + ", ".join(rec.missing_fields))
+            st.json({"источники": rec.source_ids, "гипотезы": rec.hypothesis_indices})
         if report.refusals:
             st.subheader("Отказы и недопустимые выводы")
             for refusal in report.refusals:
                 st.warning("Вывод ограничен или отклонён")
                 st.text(f"{refusal['target']}: {refusal['reason']}")
-                st.write("Нужно:", ", ".join(refusal.get("needed", [])) or "см. основание отказа")
+                st.text("Нужно: " + (", ".join(refusal.get("needed", [])) or "см. основание отказа"))
+                if refusal.get("known"): st.json({"уже известно": refusal["known"]})
         st.subheader("Недостающие сведения")
         for item in report.missing: st.text(item)
         st.subheader("Ограничения")
@@ -88,7 +101,10 @@ def show_report(report, case, prefix="report"):
     with checks_tab:
         st.json([check.model_dump() for check in report.checks])
         st.json(report.durations)
+        st.json(report.priority_assessment)
+        st.json(report.measurement)
     with provenance_tab:
+        st.text(f"Черновик: {report.draft_id}")
         st.json(report.versions, expanded=False)
         st.json(report.environment, expanded=False)
         st.json(report.retrieval)

@@ -1,0 +1,281 @@
+ps_admin_1 C repeat 1
+ps_admin_2 C repeat 1
+ps_encoded_1 C repeat 1
+ps_encoded_2 C repeat 1
+cmd_diagnostics_1 C repeat 1
+cmd_diagnostics_2 C repeat 1
+task_create_1 C repeat 1
+task_create_2 C repeat 1
+task_query_1 C repeat 1
+task_query_2 C repeat 1
+missing_command_1 C repeat 1
+missing_command_2 C repeat 1
+unknown_timezone_1 C repeat 1
+unknown_timezone_2 C repeat 1
+contradiction_1 C repeat 1
+contradiction_2 C repeat 1
+unknown_process_1 C repeat 1
+unknown_process_2 C repeat 1
+injection_1 C repeat 1
+injection_2 C repeat 1
+missing_provider_1 C repeat 1
+missing_provider_2 C repeat 1
+linked_shells_1 C repeat 1
+linked_shells_2 C repeat 1
+{
+  "C": {
+    "attempts": 24,
+    "tp": 16,
+    "fp": 0,
+    "fn": 0,
+    "refusal_tp": 10,
+    "refusal_fp": 0,
+    "refusal_fn": 0,
+    "sufficient_cases": 14,
+    "fact_total": 56,
+    "fact_valid": 56,
+    "evidence_total": 64,
+    "evidence_valid": 64,
+    "technique_claims": 16,
+    "evidence_complete_claims": 16,
+    "unsupported_technique_claims": 0,
+    "structured_claims": 72,
+    "unsupported_structured_claims": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "refusal_precision": 1.0,
+    "refusal_recall": 1.0,
+    "unjustified_refusal_rate": 0.0,
+    "fact_reference_accuracy": 1.0,
+    "evidence_completeness": 1.0,
+    "unsupported_structured_claim_rate": 0.0,
+    "unsupported_technique_claim_rate": 0.0,
+    "coverage": 0.5833333333333334,
+    "partial_fact_coverage": 0.5833333333333334,
+    "technical_error_rate": 0.0,
+    "priority_accuracy": 1.0,
+    "priority_over": 0,
+    "priority_under": 0,
+    "priority_unknown_mismatch": 0,
+    "empty_answers": 10,
+    "mean_seconds_successful": 0.003539043374966392,
+    "median_seconds_successful": 0.0032394585000474763,
+    "manual_rationale_correctness": null,
+    "manual_recommendation_correctness": null,
+    "metrics": {
+      "precision": {
+        "numerator": 16,
+        "denominator": 16,
+        "value": 1.0,
+        "applicable": true
+      },
+      "recall": {
+        "numerator": 16,
+        "denominator": 16,
+        "value": 1.0,
+        "applicable": true
+      },
+      "f1": {
+        "numerator": 32,
+        "denominator": 32,
+        "value": 1.0,
+        "applicable": true
+      },
+      "refusal_precision": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1.0,
+        "applicable": true
+      },
+      "refusal_recall": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1.0,
+        "applicable": true
+      },
+      "unjustified_refusal_rate": {
+        "numerator": 0,
+        "denominator": 14,
+        "value": 0.0,
+        "applicable": true
+      },
+      "fact_reference_accuracy": {
+        "numerator": 56,
+        "denominator": 56,
+        "value": 1.0,
+        "applicable": true
+      },
+      "evidence_reference_accuracy": {
+        "numerator": 64,
+        "denominator": 64,
+        "value": 1.0,
+        "applicable": true
+      },
+      "evidence_completeness": {
+        "numerator": 16,
+        "denominator": 16,
+        "value": 1.0,
+        "applicable": true
+      },
+      "unsupported_structured_claim_rate": {
+        "numerator": 0,
+        "denominator": 72,
+        "value": 0.0,
+        "applicable": true
+      },
+      "unsupported_technique_claim_rate": {
+        "numerator": 0,
+        "denominator": 16,
+        "value": 0.0,
+        "applicable": true
+      },
+      "coverage": {
+        "numerator": 14,
+        "denominator": 24,
+        "value": 0.5833333333333334,
+        "applicable": true
+      },
+      "partial_fact_coverage": {
+        "numerator": 14,
+        "denominator": 24,
+        "value": 0.5833333333333334,
+        "applicable": true
+      },
+      "technical_error_rate": {
+        "numerator": 0,
+        "denominator": 24,
+        "value": 0.0,
+        "applicable": true
+      },
+      "priority_accuracy": {
+        "numerator": 24,
+        "denominator": 24,
+        "value": 1.0,
+        "applicable": true
+      },
+      "priority_coverage": {
+        "numerator": 14,
+        "denominator": 24,
+        "value": 0.5833333333333334,
+        "applicable": true
+      },
+      "technique_opportunity_coverage": {
+        "numerator": 16,
+        "denominator": 26,
+        "value": 0.6153846153846154,
+        "applicable": true
+      },
+      "annotated_fact_coverage": {
+        "numerator": 0,
+        "denominator": 0,
+        "value": null,
+        "applicable": false
+      },
+      "confirmed_technique_share": {
+        "numerator": 0,
+        "denominator": 16,
+        "value": 0.0,
+        "applicable": true
+      },
+      "claim_refusal_precision": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1.0,
+        "applicable": true
+      },
+      "claim_refusal_recall": {
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1.0,
+        "applicable": true
+      },
+      "claim_excess_refusal_rate": {
+        "numerator": 0,
+        "denominator": 16,
+        "value": 0.0,
+        "applicable": true
+      }
+    },
+    "counters": {
+      "tp": 16,
+      "fp": 0,
+      "fn": 0,
+      "refusal_tp": 10,
+      "refusal_fp": 0,
+      "refusal_fn": 0,
+      "sufficient_cases": 14,
+      "fact_total": 56,
+      "fact_valid": 56,
+      "evidence_total": 64,
+      "evidence_valid": 64,
+      "technique_claims": 16,
+      "evidence_complete_claims": 16,
+      "unsupported_technique_claims": 0,
+      "structured_claims": 72,
+      "unsupported_structured_claims": 0,
+      "claim_opportunities": 26,
+      "claim_conclusions": 16,
+      "claim_refusals": 10,
+      "claim_correct_refusals": 10,
+      "claim_excess_refusals": 0,
+      "claim_expected_refusals": 10,
+      "claim_sufficient": 16,
+      "assertion_opportunities": 0,
+      "assertion_issued": 0,
+      "confirmed_technique_claims": 0,
+      "candidate_technique_claims": 0
+    },
+    "evidence_reference_accuracy": 1.0,
+    "priority_coverage": 0.5833333333333334,
+    "technique_opportunity_coverage": 0.6153846153846154,
+    "annotated_fact_coverage": null,
+    "confirmed_technique_share": 0.0,
+    "claim_refusal_precision": 1.0,
+    "claim_refusal_recall": 1.0,
+    "claim_excess_refusal_rate": 0.0,
+    "timing": {
+      "full_pass": {
+        "sum_seconds": 0.09120284999971773,
+        "count": 24,
+        "mean_seconds": 0.0038001187499882385
+      },
+      "verification": {
+        "sum_seconds": 0,
+        "count": 0,
+        "mean_seconds": null
+      },
+      "full_pass_may_be_composed": false,
+      "successful_analysis": {
+        "sum_seconds": 0.08493704099919341,
+        "count": 24,
+        "samples_seconds": [
+          0.0068420959996728925,
+          0.0031670710000071267,
+          0.0032324379999408848,
+          0.003046772999823588,
+          0.002995897999880981,
+          0.003131268999823078,
+          0.0033761820000108855,
+          0.0043915259998357214,
+          0.0028066969998690183,
+          0.003314710999802628,
+          0.003999905000000581,
+          0.0031730900000184192,
+          0.003308360000119137,
+          0.0032589779998488666,
+          0.0031343640002887696,
+          0.0032464790001540678,
+          0.002830562999861286,
+          0.0026499450000301294,
+          0.005598915000064153,
+          0.0030095480001364194,
+          0.0032938090002971876,
+          0.0030446099999608123,
+          0.0037932199998067517,
+          0.004290593999940029
+        ]
+      }
+    }
+  }
+}

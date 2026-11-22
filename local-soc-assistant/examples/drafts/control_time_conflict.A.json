@@ -1,0 +1,65 @@
+{
+  "facts": [
+    {
+      "event_id": "ev-ce57674eb704515bcc56c514",
+      "field": "data.win.eventdata.image",
+      "value": "C:\\Windows\\System32\\powershell.exe"
+    },
+    {
+      "event_id": "ev-ce57674eb704515bcc56c514",
+      "field": "data.win.eventdata.commandLine",
+      "value": "powershell.exe Get-Date"
+    },
+    {
+      "event_id": "ev-ce57674eb704515bcc56c514",
+      "field": "data.win.system.eventID",
+      "value": "1"
+    },
+    {
+      "event_id": "ev-ce57674eb704515bcc56c514",
+      "field": "data.win.system.providerName",
+      "value": "Microsoft-Windows-Sysmon"
+    }
+  ],
+  "hypotheses": [],
+  "techniques": [
+    {
+      "technique_id": "T1059.001",
+      "rationale": "Заранее заданный контрольный черновик; требуется проверка",
+      "evidence": [
+        {
+          "event_id": "ev-ce57674eb704515bcc56c514",
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "event_id": "ev-ce57674eb704515bcc56c514",
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "event_id": "ev-ce57674eb704515bcc56c514",
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "event_id": "ev-ce57674eb704515bcc56c514",
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "source_ids": [
+        "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736:0"
+      ]
+    }
+  ],
+  "recommendations": [],
+  "missing": [],
+  "abstentions": [],
+  "timeline": [
+    {
+      "event_id": "ev-ce57674eb704515bcc56c514",
+      "utc_time": "2026-11-01T07:00:00+00:00"
+    }
+  ]
+}

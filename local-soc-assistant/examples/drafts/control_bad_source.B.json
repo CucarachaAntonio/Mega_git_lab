@@ -1,0 +1,59 @@
+{
+  "facts": [
+    {
+      "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+      "field": "data.win.eventdata.image",
+      "value": "C:\\Windows\\System32\\powershell.exe"
+    },
+    {
+      "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+      "field": "data.win.eventdata.commandLine",
+      "value": "powershell.exe Get-Date"
+    },
+    {
+      "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+      "field": "data.win.system.eventID",
+      "value": "1"
+    },
+    {
+      "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+      "field": "data.win.system.providerName",
+      "value": "Microsoft-Windows-Sysmon"
+    }
+  ],
+  "hypotheses": [],
+  "techniques": [
+    {
+      "technique_id": "T1059.001",
+      "rationale": "Заранее заданный контрольный черновик; требуется проверка",
+      "evidence": [
+        {
+          "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "event_id": "ev-34d97f64cd5c235f9e59ccbc",
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "source_ids": [
+        "fragment-outside-current-corpus"
+      ]
+    }
+  ],
+  "recommendations": [],
+  "missing": [],
+  "abstentions": []
+}

@@ -23,7 +23,11 @@ commandLine, eventID, providerName. source_ids — точные chunk_id из п
 Допустимые action: review_process, collect_logs, check_account, confirm_authorization.
 Не включай verdict или status. Если техника не следует из данных, techniques=[].
 Пиши кратко: до 4 фактов, 3 техник, 2 рекомендаций. Не повторяй одинаковые факты.
-Если предлагаешь технику, обязательно приведи все четыре обязательных поля её доказательства.'''
+Если предлагаешь технику, обязательно приведи все четыре обязательных поля её доказательства.
+В рекомендации укажи source_ids локальной инструкции и missing_fields: какие отсутствующие поля уточнить.
+Гипотезу-основание обозначай индексом в hypothesis_indices; сама гипотеза не считается фактом.
+Хронологию и links предлагай только по подготовленным UTC/связям; временная связь не означает причинность.
+Поле priority необязательно: без политики и полного основания не придумывай категорию.'''
 
 class ModelUnavailable(RuntimeError): pass
 class InputBudgetError(RuntimeError): pass
@@ -135,7 +139,9 @@ class LlamaRuntime:
 def build_messages(case: Case, chunks: list[Chunk], max_chars: int):
     payload = {
         "case_id": case.case_id,
-        "events": [{"event_id": e.event_id, "fields": e.fields, "time_warning": e.time_warning} for e in case.events],
+        "events": [{"event_id": e.event_id, "fields": e.fields, "utc_time": e.utc_time,
+                    "time_state": e.time_state, "timezone_known": e.timezone_known, "time_warning": e.time_warning} for e in case.events],
+        "links": [link.model_dump(exclude={"reasons"}) for link in case.links],
         "knowledge": [chunk.model_dump() for chunk in chunks],
     }
     text = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))

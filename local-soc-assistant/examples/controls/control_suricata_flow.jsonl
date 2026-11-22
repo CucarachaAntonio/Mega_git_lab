@@ -1,0 +1,2 @@
+{"event_type": "alert", "timestamp": "2026-11-01T07:00:00Z", "sensor_name": "synthetic-sensor", "flow_id": 42, "src_ip": "192.0.2.10", "dest_ip": "192.0.2.20", "alert": {"signature": "Synthetic local control", "severity": 3}}
+{"event_type": "flow", "timestamp": "2026-11-01T07:00:10Z", "sensor_name": "synthetic-sensor", "flow_id": 42, "src_ip": "192.0.2.10", "dest_ip": "192.0.2.20", "alert": {"signature": "Synthetic local control", "severity": 3}}

@@ -1,0 +1,21 @@
+{
+  "facts": [
+    {
+      "event_id": "ev-3aa116d2f6b13ca1745579f1",
+      "field": "src_ip",
+      "value": "192.0.2.10"
+    },
+    {
+      "event_id": "ev-91d0d57c7ba83965bd4315db",
+      "field": "src_ip",
+      "value": "192.0.2.10"
+    }
+  ],
+  "hypotheses": [],
+  "techniques": [],
+  "recommendations": [],
+  "missing": [],
+  "abstentions": [
+    "Нет процессной телеметрии Sysmon для сопоставления с поддерживаемыми техниками"
+  ]
+}

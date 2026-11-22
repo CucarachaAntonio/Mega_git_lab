@@ -33,6 +33,11 @@ def _main(argv=None):
     exp.add_argument("--limit", type=int)
     exp.add_argument("--scenarios", nargs="+")
     exp.add_argument("--out", type=Path, default=Path("data/experiment"))
+    exp.add_argument("--gold", type=Path, help="Отдельный эталон контрольного набора (только оценщик)")
+    exp.add_argument("--replay-dir", type=Path, help="Сохранённые тестовые Draft; проверка механики, без оценки LLM")
+    verify = commands.add_parser("verify", help="Проверить сохранённый bundle без LLM")
+    verify.add_argument("--bundle", type=Path, required=True)
+    verify.add_argument("--out", type=Path, default=Path("data/verified"))
     args = parser.parse_args(argv)
     settings = load_settings(args.config)
     if args.command == "prepare":
@@ -45,9 +50,9 @@ def _main(argv=None):
     from .security import offline_guard
     offline_guard()
     if args.command == "schemas":
-        from .schemas import Draft, Report
+        from .schemas import Draft, Report, DraftBundle
         target = settings.root / "schemas"; target.mkdir(exist_ok=True)
-        for cls in (Draft, Report):
+        for cls in (Draft, Report, DraftBundle):
             from .schemas import SCHEMA_VERSION
             schema = cls.model_json_schema()
             schema["$id"] = f"urn:local-soc-assistant:{cls.__name__.lower()}:{SCHEMA_VERSION}"
@@ -61,8 +66,24 @@ def _main(argv=None):
         return 0 if result["generative_ready" if args.require_llm else "mode_C_ready"] else 2
     if args.command == "experiment":
         from .evaluation import experiment
-        emit(experiment(settings, args.modes, args.repeats, args.split, args.out, args.limit, args.scenarios))
+        emit(experiment(settings, args.modes, args.repeats, args.split, args.out, args.limit, args.scenarios, replay_dir=args.replay_dir, gold_path_override=args.gold))
         return 0
+    if args.command == "verify":
+        from .replay import load_bundle, verify_bundle, BundleFormatError, BundleIntegrityError
+        from .export import render_html
+        try:
+            bundle = load_bundle(args.bundle)
+        except (OSError, BundleFormatError, BundleIntegrityError) as exc:
+            code = "bundle_unavailable" if isinstance(exc, OSError) else "bundle_checksum_mismatch" if isinstance(exc, BundleIntegrityError) else "invalid_draft_format"
+            emit({"status": "technical_error", "code": code, "model_called": False})
+            return 2
+        report = verify_bundle(bundle, settings)
+        args.out.mkdir(parents=True, exist_ok=True)
+        (args.out / "report.json").write_text(report.model_dump_json(indent=2), encoding="utf-8")
+        (args.out / "report.html").write_text(render_html(report, bundle.case), encoding="utf-8")
+        emit({"status": report.status, "draft_id": report.draft_id, "model_called": False,
+              "checks": len(report.checks), "errors": report.errors, "json": str(args.out / "report.json")})
+        return 2 if report.status == "technical_error" else 0
     from .ingest import import_bytes
     from .correlate import build_cases
     from .storage import Store
@@ -71,11 +92,15 @@ def _main(argv=None):
     # Read at most the configured file limit plus one byte.
     with path.open("rb") as stream:
         content = stream.read(settings.limits.upload_mb * 1024 * 1024 + 1)
+    import time
+    preparation_started = time.perf_counter()
     result = import_bytes(content, path.name, settings.limits)
     store = Store(settings.path("data"))
     if len(content) <= settings.limits.upload_mb * 1024 * 1024:
         store.save_import(content, path.name, result)
     cases = build_cases(result.events, settings.limits, settings.correlation.enabled)
+    preparation_seconds = time.perf_counter() - preparation_started
+    for case in cases: case.preparation_seconds = preparation_seconds
     for case in cases: store.save_case(case)
     if args.command == "import":
         emit({"accepted": len(result.events), "rejected": result.rejected_records, "file_errors": result.file_errors, "duplicates": result.duplicate_records,
@@ -91,6 +116,10 @@ def _main(argv=None):
     output.mkdir(parents=True, exist_ok=True)
     (output / "report.json").write_text(report.model_dump_json(indent=2), encoding="utf-8")
     (output / "report.html").write_text(render_html(report, cases[args.case_index]), encoding="utf-8")
+    if report.draft_ref:
+        import shutil
+        shutil.copyfile(report.draft_ref, output / "draft.bundle.json")
+    (output / "case.json").write_text(cases[args.case_index].model_dump_json(indent=2), encoding="utf-8")
     emit({"status": report.status, "run_id": report.run_id, "priority": report.priority,
           "techniques": [f.technique_id for f in report.techniques if f.verdict != "rejected"],
           "errors": report.errors, "import_accepted": len(result.events), "import_rejected": result.rejected_records, "import_file_errors": result.file_errors,

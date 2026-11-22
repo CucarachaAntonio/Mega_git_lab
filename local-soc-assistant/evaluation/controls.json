@@ -1,0 +1,556 @@
+{
+  "version": "controls-2.0",
+  "purpose": "Developer controls, not a blind test or generation-quality dataset",
+  "freeze_policy": "Fixed inputs and manual expectations; do not adjust to improve metrics",
+  "scenarios": [
+    {
+      "scenario_id": "control_legitimate",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "legitimate",
+      "input": "examples/controls/control_legitimate.jsonl",
+      "sha256": "816df574ffaa73e05bd1b27901116d3f19b3bb405c6124bf9a88c8bd99c58159",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_encoded",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "sufficient",
+      "input": "examples/controls/control_encoded.jsonl",
+      "sha256": "1017dcb687e0cf7e42f28c224ca036bc23079701899fe42c9d8d8e6a64eaa98b",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "medium",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe -EncodedCommand RwBlAHQALQBEAGEAdABlAA=="
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_missing_command",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "insufficient",
+      "input": "examples/controls/control_missing_command.jsonl",
+      "sha256": "d5dfa731813cc1e2f669f4853561b540d41078307c6d35eb5dc1901d332232f0",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "abstain"
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "insufficient_evidence"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_field_conflict",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "contradiction",
+      "input": "examples/controls/control_field_conflict.jsonl",
+      "sha256": "4c00bc253f109df685dd6fb196f2b623171eb5f46c122dacc5c55f264bbaa045",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "cmd.exe /c whoami"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "abstain"
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "contradiction"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_time_conflict",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "time_conflict",
+      "input": "examples/controls/control_time_conflict.jsonl",
+      "sha256": "54d2e47f6f90cb074bf75ba5c5df90c12e40b2185617754c88d13aaa54009d8d",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "timeline_reproducible"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": false,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_bad_fact",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "bad_reference",
+      "input": "examples/controls/control_bad_fact.jsonl",
+      "sha256": "816df574ffaa73e05bd1b27901116d3f19b3bb405c6124bf9a88c8bd99c58159",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "invalid_event"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_bad_value",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "bad_value",
+      "input": "examples/controls/control_bad_value.jsonl",
+      "sha256": "816df574ffaa73e05bd1b27901116d3f19b3bb405c6124bf9a88c8bd99c58159",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "content_mismatch"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_bad_source",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "bad_source",
+      "input": "examples/controls/control_bad_source.jsonl",
+      "sha256": "816df574ffaa73e05bd1b27901116d3f19b3bb405c6124bf9a88c8bd99c58159",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "invalid_source"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_wrong_technique",
+      "family": "upgrade_process",
+      "split": "tune",
+      "kind": "wrong_technique",
+      "input": "examples/controls/control_wrong_technique.jsonl",
+      "sha256": "816df574ffaa73e05bd1b27901116d3f19b3bb405c6124bf9a88c8bd99c58159",
+      "techniques": [
+        "T1059.001"
+      ],
+      "priority": "low",
+      "should_abstain": false,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.image",
+          "value": "C:\\Windows\\System32\\powershell.exe"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.eventdata.commandLine",
+          "value": "powershell.exe Get-Date"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.eventID",
+          "value": "1"
+        },
+        {
+          "record_number": 1,
+          "field": "data.win.system.providerName",
+          "value": "Microsoft-Windows-Sysmon"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": "T1059.001",
+          "expected": "conclude",
+          "required_evidence_fields": [
+            "data.win.eventdata.image",
+            "data.win.eventdata.commandLine",
+            "data.win.system.eventID",
+            "data.win.system.providerName"
+          ]
+        },
+        {
+          "technique_id": "T1053.005",
+          "expected": "abstain"
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [
+        "contradiction"
+      ],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    },
+    {
+      "scenario_id": "control_suricata_flow",
+      "family": "upgrade_flow",
+      "split": "test",
+      "kind": "suricata",
+      "input": "examples/controls/control_suricata_flow.jsonl",
+      "sha256": "4577ba81766b85a79b679e6fe7c928bec05b103949f3e51f6a489f104671acb8",
+      "techniques": [],
+      "priority": "unknown",
+      "should_abstain": true,
+      "required_evidence_fields": [
+        "data.win.eventdata.image",
+        "data.win.eventdata.commandLine",
+        "data.win.system.eventID",
+        "data.win.system.providerName"
+      ],
+      "assertions": [
+        {
+          "record_number": 1,
+          "field": "src_ip",
+          "value": "192.0.2.10"
+        },
+        {
+          "record_number": 2,
+          "field": "src_ip",
+          "value": "192.0.2.10"
+        }
+      ],
+      "opportunities": [
+        {
+          "technique_id": null,
+          "expected": "abstain"
+        }
+      ],
+      "expected_verifier_codes_for_saved_draft": [],
+      "priority_opportunity": true,
+      "time_comparable": true,
+      "labels_are_for_evaluator_only": true
+    }
+  ]
+}

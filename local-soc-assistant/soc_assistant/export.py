@@ -17,6 +17,11 @@ def render_html(report: Report, case: Case | None = None) -> str:
     def block(title, value):
         parts.extend([f'<h2>{esc(title)}</h2>', '<pre>' + esc(json.dumps(value, ensure_ascii=False, indent=2)) + '</pre>'])
     block("Основания приоритета", report.priority_reasons)
+    block("Проверка политики срочности", report.priority_assessment)
+    block("Степень подтверждения — отдельно от срочности", report.confirmation)
+    block("Исходные наблюдения без интерпретации", [r.model_dump() for r in report.observations])
+    block("Оценка заявленных фактов", report.fact_assessments)
+    block("Черновик и происхождение времени", {"draft_id": report.draft_id, "measurement": report.measurement})
     parts.append('<h2>Факты и доказательства</h2><ul>')
     for fact in report.facts:
         parts.append(f'<li><a href="#event-{esc(fact.event_id)}">{esc(fact.event_id)}</a> · {esc(fact.field)} = {esc(fact.value)}</li>')
@@ -40,6 +45,7 @@ def render_html(report: Report, case: Case | None = None) -> str:
     for source in report.sources:
         parts.append(f'<section id="source-{esc(source.chunk_id)}"><h3>{esc(source.title)}</h3><p>{esc(source.source)} · {esc(source.version)} · {esc(source.chunk_id)}</p><pre>{esc(source.text)}</pre></section>')
     if case:
+        block("Состав групп и происхождение повторов", {k: [o.model_dump() for o in v] for k, v in case.memberships.items()})
         parts.append('<h2>События</h2>')
         for event in case.events:
             parts.append(f'<section id="event-{esc(event.event_id)}"><h3>{esc(event.event_id)}</h3><pre>{esc(json.dumps(event.model_dump(), ensure_ascii=False, indent=2))}</pre></section>')

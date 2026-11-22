@@ -88,6 +88,41 @@
           "default": 0,
           "title": "Score",
           "type": "number"
+        },
+        "start_char": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Char"
+        },
+        "end_char": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Char"
+        },
+        "document_kind": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "attack_definition",
+            "runbook",
+            "context"
+          ],
+          "title": "Document Kind",
+          "type": "string"
         }
       },
       "required": [
@@ -132,6 +167,42 @@
             }
           ],
           "title": "Value"
+        },
+        "source_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Id"
+        },
+        "record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Record Id"
+        },
+        "json_pointer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Json Pointer"
         }
       },
       "required": [
@@ -181,6 +252,40 @@
           ],
           "title": "Verdict",
           "type": "string"
+        },
+        "identity_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Identity Check",
+          "type": "string"
+        },
+        "observation_check": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "passed",
+            "failed",
+            "not_checked"
+          ],
+          "title": "Observation Check",
+          "type": "string"
+        },
+        "support_state": {
+          "default": "unchecked",
+          "enum": [
+            "unchecked",
+            "supported",
+            "contradicted",
+            "insufficient",
+            "not_verifiable"
+          ],
+          "title": "Support State",
+          "type": "string"
         }
       },
       "required": [
@@ -214,8 +319,24 @@
           "type": "array"
         },
         "delta_seconds": {
-          "title": "Delta Seconds",
-          "type": "number"
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Delta Seconds"
+        },
+        "kind": {
+          "default": "temporal",
+          "enum": [
+            "temporal",
+            "identifier"
+          ],
+          "title": "Kind",
+          "type": "string"
         }
       },
       "required": [
@@ -264,6 +385,22 @@
           ],
           "title": "Status",
           "type": "string"
+        },
+        "hypothesis_indices": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 3,
+          "title": "Hypothesis Indices",
+          "type": "array"
+        },
+        "missing_fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Missing Fields",
+          "type": "array"
         },
         "technique_ids": {
           "items": {
@@ -324,6 +461,21 @@
       "additionalProperties": true,
       "title": "Versions",
       "type": "object"
+    },
+    "observations": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Observations",
+      "type": "array"
+    },
+    "fact_assessments": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Fact Assessments",
+      "type": "array"
     },
     "facts": {
       "items": {
@@ -456,6 +608,52 @@
       },
       "title": "Attempts",
       "type": "array"
+    },
+    "draft_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Draft Id"
+    },
+    "draft_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Draft Ref"
+    },
+    "measurement": {
+      "additionalProperties": true,
+      "title": "Measurement",
+      "type": "object"
+    },
+    "priority_assessment": {
+      "additionalProperties": true,
+      "title": "Priority Assessment",
+      "type": "object"
+    },
+    "confirmation": {
+      "default": "not_assessed",
+      "enum": [
+        "not_assessed",
+        "supported_observations",
+        "candidate_only",
+        "conflicting",
+        "insufficient"
+      ],
+      "title": "Confirmation",
+      "type": "string"
     }
   },
   "required": [
@@ -467,5 +665,5 @@
   ],
   "title": "Report",
   "type": "object",
-  "$id": "urn:local-soc-assistant:report:1.1"
+  "$id": "urn:local-soc-assistant:report:1.2"
 }
